@@ -1,10 +1,10 @@
 <?php 
-    $id = $_SESSION['stud_id'];
+    $userType = $_SESSION['user_type'];
 
-    if($id == 1) {
+    if($userType == 1) {
         require_once('pages/navigation/side_menu-admin.php');
-    } elseif ($id == 2) {
+    } elseif ($userType == 2) {
         require_once('pages/navigation/side_menu-student.php');
-    } elseif ($id == 3) {
+    } elseif ($userType == 3) {
         require_once('pages/navigation/side_menu-tutor.php');
     }

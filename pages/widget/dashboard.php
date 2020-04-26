@@ -1,7 +1,7 @@
-<?php 
-    $id = $_SESSION['stud_id'];
+<?php
+$userType = $_SESSION['user_type'];
 
-    if($id == 1) {
+    if($userType == 1) {
         require_once('pages/widget/admin.php');
     } else {
         require_once('pages/widget/student.php');

@@ -58,7 +58,7 @@
                 let data = $('#main-form').serialize();
 
                 $.ajax({
-                    url : 'pages/auth/login-check.php',
+                    url : 'pages/database/login-check.php',
                     data : data,
                     method : 'post',
                     dataType: 'json',
