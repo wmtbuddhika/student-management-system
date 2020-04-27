@@ -135,6 +135,31 @@
                 }
             }
         });
+
+        $('#main-form').on('submit', function(e){
+            e.preventDefault();
+            let form_data = $('#main-form, #main-form-other-config').serializeArray();
+
+            $.ajax({
+                url : 'pages/database/save-user.php',
+                data : form_data,
+                dataType : 'json',
+                method : 'post',
+                error: function(e){
+                    alert (e);
+                    swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                },
+                success : function(r){
+                    if(r.message === 'success'){
+                        swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                    } else if(r.message === 'empty'){
+                        swal ("Sorry", 'Fields Can not be empty', 'error');
+                    } else if(r.message === 'exist'){
+                        swal ("Sorry", 'This Student Already In', 'warning');
+                    }
+                }
+            });
+        });
     </script>
 </html>
 

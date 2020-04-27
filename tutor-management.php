@@ -106,7 +106,7 @@
             let form_data = $('#main-form, #main-form-other-config').serializeArray();
 
             $.ajax({
-                url : 'pages/database/tutor_registration.php',
+                url : 'pages/database/save-user.php',
                 data : form_data,
                 dataType : 'json',
                 method : 'post',

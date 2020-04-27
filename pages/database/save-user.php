@@ -5,7 +5,8 @@
 
 	$enter_by = $_SESSION['user_id'];
 
-	$tutor_code = $_REQUEST['tutor_code'];
+    $userType = $_REQUEST['user_type'];
+	$tutor_code = $_REQUEST['code'];
 	$full_name = $_REQUEST['full_name'];
 	$calling_name = $_REQUEST['calling_name'];
 	$nic = $_REQUEST['nic_name'];
@@ -28,7 +29,7 @@
 
 	if((!empty($tutor_code) || $tutor_code != null)){
 
-		$tutor_validat_query = "SELECT u.id FROM user u, login l, role r WHERE u.id = l.user_id AND l.id = r.login_id AND r.permission_id = 2 AND (u.code = '$tutor_code' OR l.user_name = '$user_name')";
+		$tutor_validat_query = "SELECT u.id FROM user u, login l, role r WHERE u.id = l.user_id AND l.id = r.login_id AND r.permission_id = $userType AND (u.code = '$tutor_code' OR l.user_name = '$user_name')";
 		$tutor_validate_result = mysqli_query($con, $tutor_validat_query);
 		$tutor_row_count = mysqli_num_rows($tutor_validate_result);
 
@@ -47,7 +48,7 @@
                     $loginExecute = mysqli_query($con, $login);
                     $loginId = mysqli_insert_id($con);
 
-                    $role = "INSERT INTO role (login_id,permission_id) VALUES ('$loginId',2)";
+                    $role = "INSERT INTO role (login_id,permission_id) VALUES ('$loginId',$userType)";
                     $loginExecute = mysqli_query($con, $role);
 				}
 				$message = "success";

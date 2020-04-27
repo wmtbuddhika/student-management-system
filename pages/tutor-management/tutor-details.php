@@ -1,6 +1,7 @@
 <?php require_once('pages/database/main_db.php'); ?>
 
 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="main-form" method="POST">
+    <input type="hidden" name="user_type" value="2">
     <div class="row">
         <div class="col-md-12">
             <!-- START MASKED INPUT PLUGIN -->
@@ -12,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Tutor Code *</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" value="" name="tutor_code" id="tutor_code" required/>
+                                <input type="text" class="form-control" value="" name="code" id="code" required/>
                             </div>
                         </div>
                         <div class="form-group">
