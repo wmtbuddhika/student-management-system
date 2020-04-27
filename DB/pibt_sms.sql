@@ -32,8 +32,9 @@ CREATE TABLE `Allocation` (
   `module_id` int DEFAULT NULL,
   `entered_by` int DEFAULT NULL,
   `status` int DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +43,7 @@ CREATE TABLE `Allocation` (
 
 LOCK TABLES `Allocation` WRITE;
 /*!40000 ALTER TABLE `Allocation` DISABLE KEYS */;
-INSERT INTO `Allocation` VALUES (1,NULL,NULL,1,3,1,1,NULL,1),(2,NULL,NULL,1,11,1,NULL,2,1),(3,NULL,NULL,1,13,2,NULL,2,1);
+INSERT INTO `Allocation` VALUES (1,NULL,NULL,1,3,1,1,NULL,1,'A'),(4,NULL,NULL,1,16,1,NULL,2,1,'B');
 /*!40000 ALTER TABLE `Allocation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +149,7 @@ CREATE TABLE `Document` (
   `allocation_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +158,7 @@ CREATE TABLE `Document` (
 
 LOCK TABLES `Document` WRITE;
 /*!40000 ALTER TABLE `Document` DISABLE KEYS */;
-INSERT INTO `Document` VALUES (1,'AD.png','20200427050436',1,NULL,NULL,NULL,NULL),(2,'Ridma.jpg','20200427050457',1,NULL,NULL,NULL,1);
+INSERT INTO `Document` VALUES (1,'AD.png','20200427050436',1,NULL,NULL,NULL,NULL),(2,'Ridma.jpg','20200427050457',1,NULL,NULL,4,1),(3,'Thushara.jpg','20200427090458',1,NULL,NULL,1,1),(4,'AD.png','20200427100401',1,NULL,NULL,1,1),(5,'AD.png','20200427100401',1,NULL,NULL,4,1),(6,'Ridma.jpg','20200427100437',1,NULL,NULL,4,1),(7,'Ridma.jpg','20200427100420',1,NULL,NULL,1,1);
 /*!40000 ALTER TABLE `Document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,7 +177,7 @@ CREATE TABLE `Document_Comment` (
   `document_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +186,7 @@ CREATE TABLE `Document_Comment` (
 
 LOCK TABLES `Document_Comment` WRITE;
 /*!40000 ALTER TABLE `Document_Comment` DISABLE KEYS */;
-INSERT INTO `Document_Comment` VALUES (1,'Comment',NULL,NULL,2,1),(2,'Comment 2','2020-04-27 11:24:20',NULL,2,1);
+INSERT INTO `Document_Comment` VALUES (1,'Comment',NULL,NULL,2,1),(2,'Comment 2','2020-04-27 11:24:20',NULL,2,1),(3,'fdgg','2020-04-27 15:22:05',NULL,3,1);
 /*!40000 ALTER TABLE `Document_Comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +205,7 @@ CREATE TABLE `Login` (
   `updated_date` datetime DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +214,7 @@ CREATE TABLE `Login` (
 
 LOCK TABLES `Login` WRITE;
 /*!40000 ALTER TABLE `Login` DISABLE KEYS */;
-INSERT INTO `Login` VALUES (1,'admin','admin',NULL,NULL,2),(2,'student','student',NULL,NULL,1),(3,'tutor','tutor',NULL,NULL,3),(7,'a','a',NULL,NULL,10),(8,'a','a',NULL,NULL,11),(9,'thushara','13',NULL,NULL,12),(10,'thushara','a',NULL,NULL,13),(11,'qwe','qwe',NULL,NULL,14),(12,'adfsdfd','a',NULL,NULL,15),(13,'qwesdfs','sfsff',NULL,NULL,16),(14,'dsfssfss','sdfsfss',NULL,NULL,17),(15,'dsfssfsssfsfs','sdfsfss',NULL,NULL,18),(16,'dsfssfsssfsfssdfs','sdfsfss',NULL,NULL,19),(17,'dsfssfsssfsfssdfs','sdfsfss',NULL,NULL,20),(18,'2344323','242234',NULL,NULL,21);
+INSERT INTO `Login` VALUES (1,'admin','admin',NULL,NULL,2),(2,'student','student',NULL,NULL,1),(3,'tutor','tutor',NULL,NULL,3),(7,'a','a',NULL,NULL,10),(8,'a','a',NULL,NULL,11),(9,'thushara','13',NULL,NULL,12),(10,'thushara','a',NULL,NULL,13),(11,'qwe','qwe',NULL,NULL,14),(12,'adfsdfd','a',NULL,NULL,15),(13,'qwesdfs','sfsff',NULL,NULL,16),(14,'dsfssfss','sdfsfss',NULL,NULL,17),(15,'dsfssfsssfsfs','sdfsfss',NULL,NULL,18),(16,'dsfssfsssfsfssdfs','sdfsfss',NULL,NULL,19),(17,'dsfssfsssfsfssdfs','sdfsfss',NULL,NULL,20),(18,'2344323','242234',NULL,NULL,21),(19,'123123','123',NULL,NULL,22);
 /*!40000 ALTER TABLE `Login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +373,7 @@ CREATE TABLE `Role` (
   `login_id` int DEFAULT NULL,
   `permission_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,7 +382,7 @@ CREATE TABLE `Role` (
 
 LOCK TABLES `Role` WRITE;
 /*!40000 ALTER TABLE `Role` DISABLE KEYS */;
-INSERT INTO `Role` VALUES (1,'admin',NULL,1,1),(2,'student',NULL,2,3),(3,'tutor',NULL,3,2),(7,NULL,NULL,7,2),(8,NULL,NULL,8,2),(9,NULL,NULL,9,2),(10,NULL,NULL,10,2),(11,NULL,NULL,11,2),(12,NULL,NULL,12,2),(13,NULL,NULL,13,2),(14,NULL,NULL,18,1);
+INSERT INTO `Role` VALUES (1,'admin',NULL,1,1),(2,'student',NULL,2,3),(3,'tutor',NULL,3,2),(7,NULL,NULL,7,2),(8,NULL,NULL,8,2),(9,NULL,NULL,9,2),(10,NULL,NULL,10,2),(11,NULL,NULL,11,2),(12,NULL,NULL,12,2),(13,NULL,NULL,13,2),(14,NULL,NULL,18,1),(15,NULL,NULL,19,3);
 /*!40000 ALTER TABLE `Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +413,7 @@ CREATE TABLE `User` (
   `enter_by` int DEFAULT NULL,
   `calling_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,7 +422,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,NULL,'student',1,'1990-05-16','901901901V','0112345678','abc@abc.com','Colomobo',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,NULL,'admin',NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,'tutor',NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'a','a',1,'2020-04-02','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(11,'ab','a',1,'2020-04-02','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(12,'aqwe','qw',1,'2020-04-01','901901901B','12','user@domain.com','a',1,NULL,NULL,2,1,'','',2,'A'),(13,'AA','Thushara',1,'2020-04-08','901901901B','','admin','Colombo',1,NULL,NULL,3,1,'','',2,''),(14,'qer','qw',1,'2020-04-01','qwe','','qwe','qwe',1,NULL,NULL,4,1,'','',2,''),(15,'asdfsdfs','a',1,'2020-04-07','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(16,'wmtb19','Thushara',1,'2020-04-02','901901901B','','admin','Colombo',1,NULL,NULL,3,1,'','',2,''),(17,'zdfss','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(18,'zdfsssfsfd','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(19,'zdfsssfsfdsdfs','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(20,'zdfsssfsfdsdfs','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(21,'243234','Thushara',1,'2020-04-20','901901901B','','admin','Colombo',1,NULL,NULL,2,1,'','',2,'');
+INSERT INTO `User` VALUES (1,NULL,'student',1,'1990-05-16','901901901V','0112345678','abc@abc.com','Colomobo',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,NULL,'admin',NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,'Prasad',NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'a','a',1,'2020-04-02','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(11,'ab','a',1,'2020-04-02','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(12,'aqwe','qw',1,'2020-04-01','901901901B','12','user@domain.com','a',1,NULL,NULL,2,1,'','',2,'A'),(13,'AA','Thushara',1,'2020-04-08','901901901B','','admin','Colombo',1,NULL,NULL,3,1,'','',2,''),(14,'qer','qw',1,'2020-04-01','qwe','','qwe','qwe',1,NULL,NULL,4,1,'','',2,''),(15,'asdfsdfs','a',1,'2020-04-07','a','','a','a',1,NULL,NULL,2,1,'','',2,''),(16,'wmtb19','Thushara',1,'2020-04-02','901901901B','','admin','Colombo',1,NULL,NULL,3,1,'','',2,''),(17,'zdfss','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(18,'zdfsssfsfd','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(19,'zdfsssfsfdsdfs','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(20,'zdfsssfsfdsdfs','Thushara',1,'2020-04-21','901901901B','','user@domain.com','Colombo',1,NULL,NULL,3,1,'','',2,''),(21,'243234','Thushara',1,'2020-04-20','901901901B','','admin','Colombo',1,NULL,NULL,2,1,'','',2,''),(22,'student 2','a',1,'2020-04-20','901901901B','','admin','Colombo',1,NULL,NULL,3,1,'','',2,'');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -434,4 +435,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-27 14:24:12
+-- Dump completed on 2020-04-27 16:41:06
