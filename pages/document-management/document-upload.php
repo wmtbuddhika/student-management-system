@@ -5,10 +5,10 @@
                 <form role="form" class="form-horizontal" action="../../document-management.php" method="post" enctype="multipart/form-data">
                     <hr><h3 class="text-uppercase">document upload</h3><hr>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Allocation</label>
+                        <label class="col-md-3 control-label">Group</label>
                         <div class="col-md-3">
                             <select name="allocation" class="form-control select" data-live-search="true">
-                                <option selected disabled>Select Allocation</option>
+                                <option selected disabled>Select Group</option>
 
                                 <?php
                                 require_once('./pages/database/main_db.php');

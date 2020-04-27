@@ -16,7 +16,7 @@
                         $filepath = $_SERVER['DOCUMENT_ROOT'] . "/uploads/" . $doc['uuid'] . "|" . $doc['file_name'];
 
                         echo '<div class="img-box">';
-                        echo '<span>Allocation : '. $doc['code'] . '<br> ' . $doc['file_name'] . '</span><br>';
+                        echo '<span>Group : '. $doc['code'] . '<br> ' . $doc['file_name'] . '</span><br>';
                         echo '<img class="document" id="' . $doc['document_id']. '" onclick="loadComments(this.id)" src="/assets/images/doc-icon.png" width="100"">';
                         echo '<p><a class="label label-info" href="./../pages/document-management/download.php?file=' . urlencode($filepath) . '">Download</a></p>';
                         echo '</div>';
