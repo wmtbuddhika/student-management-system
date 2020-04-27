@@ -1,5 +1,5 @@
 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="main-form" method="POST">
-    <input type="hidden" name="user_type" value="1">
+    <input type="hidden" name="user_type" value="3">
     <div class="row">
         <div class="col-md-12">
             <!-- START MASKED INPUT PLUGIN -->

@@ -14,7 +14,7 @@
 	if((!empty($user_name) && $user_name != NULL) || (!empty($password) && $password != NULL)){
 		
 		//login check query
-		$main_query = "SELECT u.id, r.id user_type, u.first_name user_name FROM Login l, User u, Role r WHERE u.id = l.user_id AND l.id = r.login_id
+		$main_query = "SELECT u.id, r.id user_type, u.name user_name FROM Login l, User u, Role r WHERE u.id = l.user_id AND l.id = r.login_id
                         AND l.user_name = '$user_name' AND l.password = '$password' AND u.status = 1";
 
 		//login check query execute
