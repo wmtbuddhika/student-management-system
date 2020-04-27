@@ -130,7 +130,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Allocation Code *</label>
+                                    <label class="col-md-3 control-label">Group Code *</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control" value="" name="code" id="epf_no" required/>
                                     </div>
