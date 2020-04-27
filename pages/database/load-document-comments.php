@@ -7,9 +7,9 @@ $comments = array();
 
 if((!empty($documentId) && $documentId != NULL)) {
 
-    $query = "SELECT d.file_name file_name, IFNULL(u.name,'-') user_name, IFNULL(dc.comment,'-') comment, IFNULL(dc.created_date,'-') created_date, d.document_id
-                FROM document d LEFT JOIN document_comment dc ON d.document_id = dc.document_id LEFT JOIN user u 
-                ON dc.user_id = u.id AND d.document_id = $documentId";
+    $query = "SELECT d.file_name file_name, IFNULL(u.first_name,'-') user_name, IFNULL(dc.comment,'-') comment, IFNULL(dc.created_date,'-') created_date, d.id document_id
+                FROM document d LEFT JOIN document_comment dc ON d.id = dc.document_id LEFT JOIN user u 
+                ON dc.user_id = u.id WHERE d.id = $documentId";
 
     $execute = mysqli_query($con, $query);
     $row_count = mysqli_num_rows($execute);

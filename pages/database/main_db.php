@@ -1,5 +1,5 @@
 <?php 
 
-	$con = mysqli_connect('127.0.0.1','root', 'root', 'group_pro');
+	$con = mysqli_connect('127.0.0.1','root', 'root', 'pibt_sms');
 
  ?>

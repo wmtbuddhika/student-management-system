@@ -11,22 +11,11 @@
 	$message = "";
 
 	//Check weher catching data empty or null
-	if((!empty($user_email) && $user_email != NULL) || (!empty($password) && $password != NULL)){
+	if((!empty($user_name) && $user_name != NULL) || (!empty($password) && $password != NULL)){
 		
 		//login check query
-		$main_query = "SELECT
-			main_access.id,
-			main_access.user_type,
-			main_access.user_name,
-			main_access.`password`,
-			main_access.satatus,
-			main_access.dateTime
-		FROM
-			`main_access`
-		WHERE
-			main_access.user_name = '$user_name'
-		AND main_access.`password` = '$password'
-		AND main_access.satatus = '1'";
+		$main_query = "SELECT u.id, r.id user_type, u.first_name user_name FROM Login l, User u, Role r WHERE u.id = l.user_id AND l.id = r.login_id
+                        AND l.user_name = '$user_name' AND l.password = '$password' AND u.status = 1";
 
 		//login check query execute
 		$query_execute = mysqli_query($con, $main_query);

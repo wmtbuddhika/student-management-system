@@ -24,12 +24,13 @@
                     $uuid = date("Ymdhms",$t);
                     $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
                     $fileName = basename( $_FILES['uploaded_file']['name']);
+                    $userId = $_SESSION['user_id'];
 
                     $path = $path . $uuid . "|" . $fileName;
 
                     if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
 
-                        $query = "INSERT INTO document (uuid, file_name, status) VALUES ($uuid,'$fileName', 1)";
+                        $query = "INSERT INTO document (uuid, file_name, status, user_id) VALUES ($uuid,'$fileName', 1, $userId)";
                         $query_execute = mysqli_query($con, $query);
                         echo "The file ".  $fileName . " has been uploaded";
                     } else{

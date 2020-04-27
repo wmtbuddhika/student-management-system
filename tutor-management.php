@@ -24,7 +24,7 @@
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
         <link rel="stylesheet" type="text/css" id="theme" href="js/plugins/select2/css/select2.min.css"/>
-        <!-- EOF CSS INCLUDE -->                   
+        <!-- EOF CSS INCLUDE -->
     </head>
     <body>
         <!-- START PAGE CONTAINER -->
@@ -104,7 +104,26 @@
         $('#main-form').on('submit', function(e){
             e.preventDefault();
             let form_data = $('#main-form, #main-form-other-config').serializeArray();
-            alert (JSON.stringify(form_data));
+
+            $.ajax({
+                url : 'pages/database/tutor_registration.php',
+                data : form_data,
+                dataType : 'json',
+                method : 'post',
+                error: function(e){
+                    swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                },
+                success : function(r){
+                    if(r.message === 'success'){
+                        swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                        this.submit();
+                    } else if(r.message === 'empty'){
+                        swal ("Sorry", 'Fields Can not be empty', 'error');
+                    } else if(r.message === 'exist'){
+                        swal ("Sorry", 'This Tutor is Exists', 'warning');
+                    }
+                }
+            });
         });
     </script>
 </html>
