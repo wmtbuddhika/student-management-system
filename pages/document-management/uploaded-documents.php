@@ -10,13 +10,13 @@
                     require_once('./pages/database/main_db.php');
                     $allocationId = $_SESSION['allocation_id'];
 
-                    $query = "SELECT id document_id, uuid, file_name FROM document WHERE allocation_id = $allocationId AND status = 1";
+                    $query = "SELECT d.id document_id, d.uuid, d.file_name, a.code FROM document d, allocation a WHERE d.allocation_id = a.id AND d.allocation_id IN ($allocationId) AND d.status = 1 ORDER BY a.id";
                     $execute = mysqli_query($con, $query);
                     while($doc = mysqli_fetch_assoc($execute)){
                         $filepath = $_SERVER['DOCUMENT_ROOT'] . "/uploads/" . $doc['uuid'] . "|" . $doc['file_name'];
 
                         echo '<div class="img-box">';
-                        echo '<span>'. $doc['file_name'] . '</span><br>';
+                        echo '<span>Allocation : '. $doc['code'] . '<br> ' . $doc['file_name'] . '</span><br>';
                         echo '<img class="document" id="' . $doc['document_id']. '" onclick="loadComments(this.id)" src="/assets/images/doc-icon.png" width="100"">';
                         echo '<p><a class="label label-info" href="./../pages/document-management/download.php?file=' . urlencode($filepath) . '">Download</a></p>';
                         echo '</div>';

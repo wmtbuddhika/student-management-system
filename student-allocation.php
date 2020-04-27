@@ -129,6 +129,12 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Allocation Code *</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="" name="code" id="epf_no" required/>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary text-uppercase" type="submit">save</button>

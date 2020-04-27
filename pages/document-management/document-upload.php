@@ -5,6 +5,29 @@
                 <form role="form" class="form-horizontal" action="../../document-management.php" method="post" enctype="multipart/form-data">
                     <hr><h3 class="text-uppercase">document upload</h3><hr>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Allocation</label>
+                        <div class="col-md-3">
+                            <select name="allocation" class="form-control select" data-live-search="true">
+                                <option selected disabled>Select Allocation</option>
+
+                                <?php
+                                require_once('./pages/database/main_db.php');
+                                $query = "SELECT a.id, a.code FROM allocation a WHERE a.status = 1";
+
+                                $result = mysqli_query($con, $query);
+
+                                while($data = mysqli_fetch_array($result)){
+
+                                    ?>
+
+                                    <option value="<?php echo $data['id'];?>"><?php echo $data['code']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">File</label>
                         <div class="upload-btn-wrapper">
                             <input type="file" id="my-file" name="uploaded_file" class="my-file"/>
@@ -26,12 +49,11 @@
                     $fileName = basename( $_FILES['uploaded_file']['name']);
                     $userId = $_SESSION['user_id'];
                     $allocationId = $_SESSION['allocation_id'];
-
                     $path = $path . $uuid . "|" . $fileName;
+                    $allocationId = $_POST["allocation"];
 
                     if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
-
-                        $query = "INSERT INTO document (uuid, file_name, status, user_id, allocation_id) VALUES ($uuid,'$fileName', 1, $userId, $allocationId)";
+                        $query = "INSERT INTO document (uuid, file_name, status, user_id, allocation_id) VALUES ($uuid,'$fileName', 1, $userId, $allocationId);";
                         $query_execute = mysqli_query($con, $query);
                         echo "The file ".  $fileName . " has been uploaded";
                     } else{
