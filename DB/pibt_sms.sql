@@ -92,8 +92,10 @@ CREATE TABLE `Blog` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   `allocation_id` int DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `entered_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +104,7 @@ CREATE TABLE `Blog` (
 
 LOCK TABLES `Blog` WRITE;
 /*!40000 ALTER TABLE `Blog` DISABLE KEYS */;
+INSERT INTO `Blog` VALUES (1,'sdfsf sefwe','<p><span style=\"font-weight: bold;\">cvsv</span> <span style=\"font-style: italic;\">sdvsf</span> <span style=\"text-decoration-line: underline;\">sdvsd <span style=\"background-color: yellow;\">sfdsdf</span></span></p>',NULL,NULL,4,1,'1'),(2,'sdfsf sefwe','<p><span style=\"font-weight: bold;\">cvsv</span> <span style=\"font-style: italic;\">sdvsf</span> <span style=\"text-decoration-line: underline;\">sdvsd <span style=\"background-color: yellow;\">sfdsdf</span></span></p>',NULL,NULL,1,1,'1'),(3,'IntroCheck2','<p><ul><li>sfsf</li><li>sdsf</li><li>sdfs</li><li>sdfs</li><li>dfsfs</li></ul><ol><li>sfsf</li><li>sfsdf</li><li>dfsfsdfsf</li></ol></p>',NULL,NULL,1,1,'1'),(4,'sdf','<p>sdfs</p>',NULL,NULL,1,1,'1'),(5,'mmm','<p>jbhb</p>',NULL,NULL,1,1,'1'),(6,'Sknksd','<p>nsjdnf</p>',NULL,NULL,4,1,'1');
 /*!40000 ALTER TABLE `Blog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -435,4 +438,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-27 16:41:06
+-- Dump completed on 2020-04-27 22:26:24
