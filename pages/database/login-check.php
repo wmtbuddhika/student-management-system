@@ -14,7 +14,9 @@
 	if((!empty($user_name) && $user_name != NULL) || (!empty($password) && $password != NULL)){
 		
 		//login check query
-		$main_query = "SELECT u.id, r.id user_type, u.name user_name FROM Login l, User u, Role r WHERE u.id = l.user_id AND l.id = r.login_id
+		$main_query = "SELECT u.id, r.id user_type, u.name user_name, 
+                        (SELECT a.id FROM allocation a WHERE IF(r.permission_id = 2,a.tutor_id = u.id,a.student_id = u.id)) allocation_id
+                        FROM Login l, User u, Role r WHERE u.id = l.user_id AND l.id = r.login_id
                         AND l.user_name = '$user_name' AND l.password = '$password' AND u.status = 1";
 
 		//login check query execute
@@ -31,6 +33,7 @@
 			session_start();
 
 			$_SESSION['user_id'] = $result['id'];
+			$_SESSION['allocation_id'] = $result['allocation_id'];
 			$_SESSION['user_type'] = $result['user_type'];
 			$_SESSION['user_name'] = $result['user_name'];
 

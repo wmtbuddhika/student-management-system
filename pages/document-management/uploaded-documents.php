@@ -8,8 +8,9 @@
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="main-form" method="POST">
                     <?php
                     require_once('./pages/database/main_db.php');
+                    $allocationId = $_SESSION['allocation_id'];
 
-                    $query = "SELECT id document_id, uuid, file_name FROM Document WHERE status = 1";
+                    $query = "SELECT id document_id, uuid, file_name FROM document WHERE allocation_id = $allocationId AND status = 1";
                     $execute = mysqli_query($con, $query);
                     while($doc = mysqli_fetch_assoc($execute)){
                         $filepath = $_SERVER['DOCUMENT_ROOT'] . "/uploads/" . $doc['uuid'] . "|" . $doc['file_name'];
