@@ -19,6 +19,7 @@
             <li><a href="../../tutor-management.php"><span class="fa fa-inbox"></span>Tutor Management</a></li>
             <li><a href="../../student-management.php"><span class="fa fa-file-text"></span> Student Management</a></li>
             <li><a href="../../batch-management.php"><span class="fa fa-file-text"></span> Batch Management</a></li>
+            <li><a href="../../module-management.php"><span class="fa fa-file-text"></span> Module Management</a></li>
         </ul>
     </li>
     <li class="xn-openable">
