@@ -94,7 +94,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
 <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
 <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
-
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="js/plugins/moment.min.js"></script>
 <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- END THIS PAGE PLUGINS-->

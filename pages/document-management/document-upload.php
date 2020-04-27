@@ -6,7 +6,7 @@
                     <hr><h3 class="text-uppercase">document upload</h3><hr>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Group</label>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <select name="allocation" class="form-control select" data-live-search="true">
                                 <option selected disabled>Select Group</option>
 
