@@ -56,6 +56,8 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             <?php require_once('pages/blog-management/add-blog.php'); ?>
 
             <?php require_once('pages/blog-management/all-blog.php'); ?>
+
+            <?php require_once('pages/blog-management/blog-comments.php'); ?>
         </div>
         <!-- END PAGE CONTENT WRAPPER -->
     </div>

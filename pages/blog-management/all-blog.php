@@ -19,14 +19,14 @@
                         require_once('pages/database/main_db.php');
                         $allocationId = $_SESSION['allocation_id'];
 
-                        $tutor_main_select_query = "SELECT a.code,b.title,b.content FROM blog b, allocation a WHERE a.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ORDER BY b.title";
+                        $tutor_main_select_query = "SELECT b.id,a.code,b.title,b.content FROM blog b, allocation a WHERE a.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ORDER BY b.title";
 
                         $query_execute = mysqli_query($con, $tutor_main_select_query);
 
                         while ($result = mysqli_fetch_array($query_execute)) {
                     ?>
 
-                    <tr id="trow_1">
+                    <tr id="<?php echo $result['id']; ?>" onclick="loadComments(this.id)">
                         <td><strong><?php echo $result['code']; ?></strong></td>
                         <td><strong><?php echo $result['title']; ?></strong></td>
                         <td><strong><?php echo $result['content']; ?></strong></td>
