@@ -17,7 +17,7 @@
         <a href="#"><span class="fa fa-reddit-square"></span>Resources</a>
         <ul>
             <li><a href="../tutor-registration.php"><span class="fa fa-television"></span>Messenger</a></li>
-            <li><a href="../tutor-registration.php"><span class="fa fa-calendar"></span>Meetings</a></li>
+            <li><a href="../../meeting-management.php"><span class="fa fa-calendar"></span>Meetings</a></li>
             <li><a href="../tutor-registration.php"><span class="fa fa-file"></span>File Uploads</a></li>
             <li><a href="../tutor-registration.php"><span class="fa fa-terminal"></span>Blogger</a></li>
         </ul>
