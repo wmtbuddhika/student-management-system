@@ -10,13 +10,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Batch Code *</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" value="" name="student_code" id="epf_no" />
+                                <input type="text" class="form-control" value="" name="batch_code" id="batch_code" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Batch Name *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="full_name" id="full_name"/>
+                                <input type="text" class="form-control" value="" name="batch_name" id="batch_name"/>
                             </div>
                         </div>
                         <div class="form-group">

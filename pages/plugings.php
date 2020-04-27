@@ -36,3 +36,4 @@
 <!-- END SCRIPTS -->
 
 <script type="text/javascript" src="../js/plugins/select2/js/select2.full.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

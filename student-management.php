@@ -109,6 +109,7 @@
         <script type="text/javascript" src="js/actions.js"></script>
         
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- END TEMPLATE -->
     <!-- END SCRIPTS -->
 
@@ -146,7 +147,6 @@
                 dataType : 'json',
                 method : 'post',
                 error: function(e){
-                    alert (e);
                     swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
                 },
                 success : function(r){
