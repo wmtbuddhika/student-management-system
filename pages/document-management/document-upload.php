@@ -12,7 +12,8 @@
 
                                 <?php
                                 require_once('./pages/database/main_db.php');
-                                $query = "SELECT a.id, a.code FROM allocation a WHERE a.status = 1";
+                                $allocationId = $_SESSION['allocation_id'];
+                                $query = "SELECT a.id, a.code FROM allocation a WHERE a.status = 1 AND a.id IN ($allocationId)";
 
                                 $result = mysqli_query($con, $query);
 
