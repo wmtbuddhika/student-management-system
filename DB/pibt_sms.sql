@@ -123,7 +123,7 @@ CREATE TABLE `Blog_Comment` (
   `blog_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,6 +132,7 @@ CREATE TABLE `Blog_Comment` (
 
 LOCK TABLES `Blog_Comment` WRITE;
 /*!40000 ALTER TABLE `Blog_Comment` DISABLE KEYS */;
+INSERT INTO `Blog_Comment` VALUES (1,'sdfsf',NULL,NULL,3,1);
 /*!40000 ALTER TABLE `Blog_Comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,7 +293,7 @@ CREATE TABLE `Message` (
   `user_id` int DEFAULT NULL,
   `allocation_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,6 +302,7 @@ CREATE TABLE `Message` (
 
 LOCK TABLES `Message` WRITE;
 /*!40000 ALTER TABLE `Message` DISABLE KEYS */;
+INSERT INTO `Message` VALUES (1,'A',1,'2020-02-02 00:00:00',NULL,3,4),(2,'B',1,'2020-04-02 00:00:00',NULL,1,4),(3,'Hello',1,NULL,NULL,1,1),(4,'how are you?',1,NULL,NULL,1,1),(5,'sdfs',1,NULL,NULL,1,1),(6,'how are you?',1,NULL,NULL,1,1),(7,'Hello',1,NULL,NULL,1,4),(8,'how are you?',1,NULL,NULL,1,1),(9,'how are you?',1,NULL,NULL,1,4),(10,'Damn',1,'2020-04-28 14:56:19',NULL,1,1),(11,'ok sir',1,NULL,NULL,1,1),(12,'yes boss s s s s s s',1,NULL,NULL,1,1),(13,'sdf',1,NULL,NULL,1,1),(14,'how are you?2',1,NULL,NULL,1,1),(15,'Hello houw',1,NULL,NULL,1,1),(16,'how are you? toyi ',1,NULL,NULL,1,1),(17,'yestr',1,NULL,NULL,3,1);
 /*!40000 ALTER TABLE `Message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-27 22:26:24
+-- Dump completed on 2020-04-28 15:46:57
