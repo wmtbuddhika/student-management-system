@@ -26,6 +26,7 @@
         <a href="#"><span class="fa fa-dribbble"></span>Student Management</a>
         <ul>
             <li><a href="../../student-allocation.php"><span class="fa fa-adjust"></span>Student Allocation</a></li>
+            <li><a href="../../tutor-allocation.php"><span class="fa fa-adjust"></span>Tutor Allocation</a></li>
         </ul>
     </li>
     </li>

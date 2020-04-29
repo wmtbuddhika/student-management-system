@@ -12,10 +12,10 @@
 	$result_array = array();
 	$message = "";
 
-	if((!empty($batch) || $batch != null) || (!empty($tutor) || $tutor != null)){
+	if((!empty($tutor) || $tutor != null)){
 
         $main_tutor_query = "INSERT INTO allocation (tutor_id,module_id,entered_by,status,code)
-                VALUES ('$tutor','$module','$enter_by',1,$code)";
+                VALUES ('$tutor','$module','$enter_by',1,'$code')";
 
 		$query_execute = mysqli_query($con, $main_tutor_query);
 		
