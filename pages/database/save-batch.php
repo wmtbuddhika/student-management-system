@@ -16,7 +16,7 @@
 
 	if((!empty($batch_code) || $batch_code != null)){
 
-		$tutor_validat_query = "SELECT id FROM Batch WHERE name = '$batch_name' OR code = '$batch_code'";
+		$tutor_validat_query = "SELECT id FROM batch WHERE name = '$batch_name' OR code = '$batch_code'";
 
 		$tutor_validate_result = mysqli_query($con, $tutor_validat_query);
 		$tutor_row_count = mysqli_num_rows($tutor_validate_result);
