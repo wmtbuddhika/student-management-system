@@ -56,11 +56,17 @@
                                 if ($userType != 3) {
                                     ?>
                                     <option value="1">Schedule</option>
-
                                     <?php
                                 }
                                 ?>
-                                <option value="0">Pending</option>
+                                <?php
+                                $userType = $_SESSION['user_type'];
+                                if ($userType == 3) {
+                                    ?>
+                                    <option value="0">Pending</option>
+                                    <?php
+                                }
+                                ?>
                                 <?php
                                 $userType = $_SESSION['user_type'];
                                 if ($userType != 3) {
