@@ -15,7 +15,7 @@
 
 	if((!empty($module_code) || $module_code != null)){
 
-		$tutor_validat_query = "SELECT id FROM module FROM name = '$module_name' AND code = '$module_code' AND status = 1";
+		$tutor_validat_query = "SELECT id FROM module WHERE name = '$module_name' AND code = '$module_code' AND status = 1";
 
 		$tutor_validate_result = mysqli_query($con, $tutor_validat_query);
 		if ($tutor_validate_result) {

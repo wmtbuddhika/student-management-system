@@ -15,7 +15,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>        
         <!-- META SECTION -->
-        <title>SMS | Student Allocation</title>            
+        <title>SMS | Meetings</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,50 +38,48 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             <!-- END PAGE SIDEBAR -->
             
             <!-- PAGE CONTENT -->
-            <div class="page-content">
+            <div class="page-content" id="meeting-details">
                 
                 <?php require_once('pages/dashboard/top-bar.php'); ?>
                 
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="home.php">Home</a></li>
-                    <li class="active">Student Allocation</li>
+                    <li class="active">Meetings</li>
                 </ul>
                 <!-- END BREADCRUMB -->
                 
                 <!-- PAGE TITLE -->
                 <div class="page-title">                    
-                    <h2 class="text-uppercase">Student Allocation</h2>
+                    <h2 class="text-uppercase">Meeting scheduler</h2>
                 </div>
                 <!-- END PAGE TITLE -->                
                 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
                     
-                    <div class="row">                        
+                    <div class="row">
                         <div class="col-md-12">                   
 
                             <!-- START BOOTSTRAP SELECT -->
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form class="form-horizontal" id="main-form">
+                                        <input type="hidden" value="" id="meeting_id" name="meeting_id">
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Batch *</label>
+                                            <label class="col-md-3 control-label">Group *</label>
                                             <div class="col-md-9">                                                                                
-                                                <select name="batch" class="form-control select" data-live-search="true">
-                                                    <option selected disabled>Select Batch</option>
-
+                                                <select id="group" name="group" class="form-control select" data-live-search="true">
                                                     <?php
                                                         $allocationId = $_SESSION['allocation_id'];
-                                                        $batch_query = "SELECT b.id, b.name FROM batch b, allocation a WHERE a.batch_id = b.id 
-                                                            AND a.id = $allocationId AND b.status = 1 AND a.status = 1";
+                                                        $batch_query = "SELECT a.id, a.code FROM allocation a WHERE a.id IN ($allocationId) AND a.status = 1";
 
                                                         $batch_result = mysqli_query($con, $batch_query);
 
                                                         while ($bact_data = mysqli_fetch_array($batch_result)) {
                                                      ?>
 
-                                                    <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['name']; ?></option>
+                                                    <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['code']; ?></option>
 
                                                 <?php } ?>
                                                 </select>
@@ -90,7 +88,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Meeting Topic *</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" value="" name="meeting_toppic" id="meeting_toppic" required/>
+                                                <input type="text" class="form-control" value="" name="meeting_topic" id="meeting_topic" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -112,9 +110,26 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Status</label>
                                             <div class="col-md-9">                                                                                
-                                                <select name="status" class="form-control select">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Disable</option>
+                                                <select name="status" id="status" class="form-control select">
+                                                    <?php
+                                                    $userType = $_SESSION['user_type'];
+                                                    if ($userType != 3) {
+                                                        ?>
+                                                        <option value="1">Schedule</option>
+
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <option value="0">Pending</option>
+                                                    <?php
+                                                    $userType = $_SESSION['user_type'];
+                                                    if ($userType != 3) {
+                                                        ?>
+                                                        <option value="2">Cancel</option>
+
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -132,15 +147,65 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                     </div>
                     
                 </div>
-                <!-- END PAGE CONTENT WRAPPER -->
 
-                <!-- START students in batch table -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
 
                             <div class="panel-heading">
-                                <h3 class="panel-title text-uppercase">Allocated Student</h3>
+                                <h3 class="panel-title text-uppercase">pending meetings</h3>
+                            </div>
+
+                            <div class="panel-body panel-body-table">
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-actions">
+                                        <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>Meeting Topic</th>
+                                            <th>Scheduled Date</th>
+                                            <th>Scheduled By</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $allocationId = $_SESSION['allocation_id'];
+                                        $query = "SELECT m.id,a.code,m.title,m.schedule_date,m.status,u.name FROM allocation a,meeting m, user u 
+                                                    WHERE m.entered_by = u.id AND a.id = m.allocation_id AND a.status = 1 AND m.status = 0
+                                                    AND a.id IN ($allocationId)";
+                                        $meetings = mysqli_query($con, $query);
+                                        while ($meeting = mysqli_fetch_array($meetings)) {
+                                            ?>
+
+                                            <tr id="trow_3">
+                                                <td class="text-center"><?php echo $meeting['code']; ?></td>
+                                                <td><strong><?php echo $meeting['title']; ?></strong></td>
+                                                <td><?php echo $meeting['schedule_date']; ?></td>
+                                                <td><?php echo $meeting['name']; ?></td>
+                                                <td>
+                                                    <button id="<?php echo $meeting['id']; ?>" class="btn btn-default btn-rounded btn-condensed btn-sm"onclick="loadMeeting(this.id)"><span class="fa fa-pencil"></span></button>
+                                                </td>
+                                            </tr>
+
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-uppercase">scheduled meetings</h3>
                             </div>
 
                             <div class="panel-body panel-body-table">
@@ -149,51 +214,37 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     <table class="table table-bordered table-striped table-actions">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Student Name</th>
-                                                <th>Batch Name</th>
-                                                <th>Tutoer Name</th>
-                                                <th>actions</th>
+                                                <th>Group</th>
+                                                <th>Meeting Topic</th>
+                                                <th>Scheduled Date</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <!--<tbody>
-
-                                            <?php /*
-                                                $allocation_view = "SELECT
-                                                    student_assign_to_batch.id,
-                                                    sms_student_details.full_name AS S,
-                                                    sms_batch_registration.batch_name,
-                                                    sms_tutor_details.full_name AS a
-                                                FROM
-                                                    student_assign_to_batch
-                                                INNER JOIN sms_student_details ON student_assign_to_batch.b_student_reg_id = sms_student_details.id
-                                                INNER JOIN sms_batch_registration ON student_assign_to_batch.b_batch_id = sms_batch_registration.id
-                                                INNER JOIN sms_tutor_details ON student_assign_to_batch.b_tutor_id = sms_tutor_details.id";
-
-                                                $allocation_query = mysqli_query($con, $allocation_view);
-
-                                                while ($student_data = mysqli_fetch_array($allocation_query)) {
-
-                                            */?>
+                                        <tbody>
+                                            <?php
+                                                $query = "SELECT m.id,a.code,m.title,m.schedule_date,m.status FROM allocation a,meeting m 
+                                                            WHERE a.id = m.allocation_id AND a.status = 1 AND m.status != 0 AND a.id IN ($allocationId)";
+                                                $meetings = mysqli_query($con, $query);
+                                                while ($meeting = mysqli_fetch_array($meetings)) {
+                                            ?>
 
                                             <tr id="trow_3">
-                                                <td class="text-center"><?php /*echo $student_data['id']; */?></td>
-                                                <td><strong><?php /*echo $student_data['S']; */?></strong></td>
-                                                <td><?php /*echo $student_data['batch_name']; */?></td>
-                                                <td><?php /*echo $student_data['a']; */?></td>
+                                                <td class="text-center"><?php echo $meeting['code']; ?></td>
+                                                <td><strong><?php echo $meeting['title']; ?></strong></td>
+                                                <td><?php echo $meeting['schedule_date']; ?></td>
+                                                <td><?php if($meeting['status'] == 0) {echo 'Pending';} elseif ($meeting['status'] == 1) {echo 'Scheduled';} elseif ($meeting['status'] == 2) {echo 'Canceled';} ?></td>
                                                 <td>
-                                                    <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                                                    <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>
+                                                    <button id="<?php echo $meeting['id']; ?>" class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="loadMeeting(this.id)"><span class="fa fa-pencil"></span></button>
                                                 </td>
                                             </tr>
 
-                                            <?php /*
+                                            <?php
                                                 }
-                                            */?>
-                                        </tbody>-->
+                                            ?>
+                                        </tbody>
                                     </table>
-                                </div>                                
-
+                                </div>
                             </div>
                         </div>                                                
                     </div>
@@ -248,7 +299,6 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
     <script type="text/javascript">
         
         $('#main-form').on('submit', function(e){
-            e.preventDefault();
             let form_data = $('#main-form').serializeArray();
             
             $.ajax({
@@ -258,20 +308,34 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 method : 'post',
                 error: function(e){
 
-                    swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
                 },
                 success : function(r){
-                    if(r.message === 'success'){
-                        swal ("message", 'Congratulations. New Tutor has Registered', 'success');
-                    } else if(r.message === 'empty'){
-                        swal ("Sorry", 'Fields Can not be empty', 'error');
-                    } else if(r.message === 'exist'){
-                        swal ("Sorry", 'This Student Already In', 'warning'); 
-                    }
+
                 }
             });
         });
 
+        function loadMeeting(meetingId) {
+            $.ajax({
+                url : 'pages/database/load-meeting.php',
+                data : {'meeting_id': meetingId},
+                dataType : 'json',
+                method : 'post',
+                error: function(e){
+                    swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                },
+                success : function(r){
+                    $('#meeting_id').val(r.meetings[0].meeting_id);
+                    $('#group').val(r.meetings[0].id);
+                    $('#meeting_topic').val(r.meetings[0].title);
+                    $('#dom').val(r.meetings[0].schedule_date);
+                    $('#meeting_message').val(r.meetings[0].comment);
+                }
+            });
+            $('html, body').animate({
+                scrollTop: $("#meeting-details").offset().top
+            }, 2000);
+        }
     </script>
 </html>
 
