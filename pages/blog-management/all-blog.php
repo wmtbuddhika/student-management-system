@@ -26,13 +26,13 @@
                         while ($result = mysqli_fetch_array($query_execute)) {
                     ?>
 
-                    <tr id="<?php echo $result['id']; ?>" onclick="loadComments(this.id)">
+                    <tr>
                         <td><strong><?php echo $result['code']; ?></strong></td>
                         <td><strong><?php echo $result['title']; ?></strong></td>
                         <td><strong><?php echo $result['content']; ?></strong></td>
                         <td>
-                            <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_1');"><span class="fa fa-times"></span></button>
+                            <button onclick="editBlog(<?php echo $result['id']; ?>)" class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
+                            <button onclick="loadComments(<?php echo $result['id']; ?>)" class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-book"></span></button>
                         </td>
                     </tr>
 
@@ -45,3 +45,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    function editBlog(blogId) {
+        $.ajax({
+            url : 'pages/database/load-blog.php',
+            data : {'blog_id': blogId},
+            dataType : 'json',
+            method : 'post',
+            error: function(e){
+                swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+            },
+            success : function(r){
+                $('#blog_id').val(r.blog[0].id);
+                $('#title').val(r.blog[0].title);
+                $('.note-editable').html(r.blog[0].content);
+            }
+        });
+        $('html, body').animate({
+            scrollTop: $("#blog-details").offset().top
+        }, 2000);
+    }
+</script>

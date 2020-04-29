@@ -136,6 +136,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
     $('#blog-form').on('submit', function(e){
         // e.preventDefault();
+        let blog_id = $('#blog_id').val();
         let allocation_id = $('#allocation_id').val();
         let blog_title = $('#title').val();
         let blog_data = $('.note-editable').html();
@@ -145,7 +146,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
         $.ajax({
             url : 'pages/database/save-blog.php',
-            data : {'allocation_id': allocation_id, 'blog_title': blog_title, 'blog_data': blog_data},
+            data : {'allocation_id': allocation_id, 'blog_title': blog_title, 'blog_data': blog_data, 'blog_id': blog_id},
             dataType : 'json',
             method : 'post',
             error: function(e){
