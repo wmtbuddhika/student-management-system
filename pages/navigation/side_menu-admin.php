@@ -20,13 +20,13 @@
             <li><a href="../../student-management.php"><span class="fa fa-file-text"></span> Student Management</a></li>
             <li><a href="../../batch-management.php"><span class="fa fa-file-text"></span> Batch Management</a></li>
             <li><a href="../../module-management.php"><span class="fa fa-file-text"></span> Module Management</a></li>
+            <li><a href="../../group-management.php"><span class="fa fa-file-text"></span> Group Management</a></li>
         </ul>
     </li>
     <li class="xn-openable">
         <a href="#"><span class="fa fa-dribbble"></span>Student Management</a>
         <ul>
             <li><a href="../../student-allocation.php"><span class="fa fa-adjust"></span>Student Allocation</a></li>
-            <li><a href="../../tutor-allocation.php"><span class="fa fa-adjust"></span>Tutor Allocation</a></li>
         </ul>
     </li>
     </li>

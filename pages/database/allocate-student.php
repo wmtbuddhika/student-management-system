@@ -5,31 +5,24 @@
 
 	$enter_by = $_SESSION['user_id'];
 	
-	$code = $_REQUEST['code'];
-	$batch = $_REQUEST['batch'];
-	$module = $_REQUEST['module'];
-	$tutor = $_REQUEST['tutor'];
-	$student = $_REQUEST['student'];
-	
+	$allocationId = $_REQUEST['allocation_id'];
+	$students = $_REQUEST['students'];
+
 	$result_array = array();
 	$message = "";
 
-	if((!empty($batch) || $batch != null) || (!empty($tutor) || $tutor != null)){
+	if((!empty($allocationId) || $allocationId != null) || (!empty($students) || $students != null)){
 
-        $main_tutor_query = "INSERT INTO allocation_group (entered_by,status,code)
-                VALUES ('$enter_by',1,'$code')";
-        $query_execute = mysqli_query($con, $main_tutor_query);
-        $allocationId = mysqli_insert_id($con);
+	    foreach ($students as $student) {
+            $query = "INSERT INTO allocation (allocation_group_id,student_id,status) VALUES ($allocationId,'$student',1)";
+            $query_execute = mysqli_query($con, $query);
 
-        $main_tutor_query = "INSERT INTO allocation (id,tutor_id,student_id,batch_id,module_id,status)
-                VALUES ($allocationId,'$tutor','$student','$batch','$module',1)";
-        $query_execute = mysqli_query($con, $main_tutor_query);
-		
-		if($query_execute){
-			$message = "success";
-		} else {
-			$message = "error";
-		}
+            if($query_execute){
+                $message = "success";
+            } else {
+                $message = "error";
+            }
+        }
 
 	} else {
 		$message = "empty";

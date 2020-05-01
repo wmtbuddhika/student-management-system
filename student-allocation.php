@@ -63,62 +63,28 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
                     <!-- START BOOTSTRAP SELECT -->
                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-uppercase">student allocation</h3>
+                        </div>
                         <div class="panel-body">
                             <form class="form-horizontal" id="main-form">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Batch</label>
-                                    <div class="col-md-9">
-                                        <select name="batch" class="form-control select" data-live-search="true">
-                                            <option selected disabled>Select Batch</option>
+                                    <label class="col-md-3 control-label">Group</label>
+                                    <div class="col-md-4">
+                                        <select id="allocation" name="allocation" class="form-control select" data-live-search="true">
+                                            <option selected disabled>Select Group</option>
 
                                             <?php
-                                            $batch_query = "SELECT id, name FROM batch WHERE status = 1";
-                                            $batch_result = mysqli_query($con, $batch_query);
+                                            require_once('./pages/database/main_db.php');
+                                            $allocationId = $_SESSION['allocation_id'];
+                                            $query = "SELECT a.id, a.code FROM allocation_group a WHERE a.status = 1";
 
-                                            while ($bact_data = mysqli_fetch_array($batch_result)) {
+                                            $result = mysqli_query($con, $query);
+
+                                            while($data = mysqli_fetch_array($result)){
+
                                                 ?>
-
-                                                <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['name']; ?></option>
-
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Module</label>
-                                    <div class="col-md-9">
-                                        <select name="module" class="form-control select" data-live-search="true">
-                                            <option selected disabled>Select Module</option>
-
-                                            <?php
-                                            $batch_query = "SELECT m.id, m.name FROM module m WHERE m.status = '1'";
-                                            $batch_result = mysqli_query($con, $batch_query);
-
-                                            while ($bact_data = mysqli_fetch_array($batch_result)) {
-                                                ?>
-
-                                                <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['name']; ?></option>
-
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Tutor</label>
-                                    <div class="col-md-9">
-                                        <select name="tutor" class="form-control select" data-live-search="true">
-                                            <option selected disabled>Select Tutor</option>
-
-                                            <?php
-                                            $tutor_query = "SELECT u.id, u.name FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id
-                                                                AND r.permission_id = 2 AND u.status = 1";
-                                            $tutor_result = mysqli_query($con, $tutor_query);
-
-                                            while($tutor_data = mysqli_fetch_array($tutor_result)){
-                                                ?>
-
-                                                <option value="<?php echo $tutor_data['id'];?>"><?php echo $tutor_data['name']; ?></option>
-
+                                                <option value="<?php echo $data['id'];?>"><?php echo $data['code']; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -128,8 +94,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Student</label>
                                     <div class="col-md-9">
-                                        <select name="student" class="form-control select" data-live-search="true">
-                                            <option selected disabled>Select Student</option>
+                                        <select id="student" name="student" class="form-control select" data-live-search="true" multiple>
 
                                             <?php
                                             $student_query = "SELECT u.id, u.name FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id
@@ -140,18 +105,11 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                             while($student_data = mysqli_fetch_array($student_result)){
 
                                                 ?>
-
                                                 <option value="<?php echo $student_data['id'];?>"><?php echo $student_data['name']; ?></option>
                                                 <?php
                                             }
                                             ?>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Group Code *</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" value="" name="code" id="epf_no" required/>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -167,128 +125,122 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 </div>
             </div>
 
-        </div>
-        <!-- END PAGE CONTENT WRAPPER -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
 
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-uppercase">not allocated Students</h3>
+                        </div>
 
+                        <div class="panel-body panel-body-table">
 
-        <!-- START students in batch table -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-uppercase">not allocated Students</h3>
-                    </div>
-
-                    <div class="panel-body panel-body-table">
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-actions dataTable">
-                                <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Date of Birth</th>
-                                    <th>NIC</th>
-                                    <th>Mobile</th>
-                                    <th>Email</th>
-                                    <th>Address</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                require_once('pages/database/main_db.php');
-
-                                $tutor_main_select_query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
-                                            FROM user u LEFT JOIN allocation a ON u.id = a.student_id, login l, role r WHERE u.id = l.user_id 
-                                            AND r.login_id = l.id AND r.permission_id = 3 AND a.id IS NULL ORDER BY u.code";
-
-                                $query_execute = mysqli_query($con, $tutor_main_select_query);
-
-                                while ($result = mysqli_fetch_array($query_execute)) {
-                                    ?>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-actions dataTable">
+                                    <thead>
                                     <tr>
-                                        <td><strong><?php echo $result['code']; ?></strong></td>
-                                        <td><strong><?php echo $result['name']; ?></strong></td>
-                                        <td><strong><?php if($result['gender'] == 1){echo 'Male';} else {echo 'Female';}?></strong></td>
-                                        <td><strong><?php echo $result['date_of_birth']; ?></strong></td>
-                                        <td><strong><?php echo $result['nic_no']; ?></strong></td>
-                                        <td><strong><?php echo $result['mobile_no']; ?></strong></td>
-                                        <td><strong><?php echo $result['email']; ?></strong></td>
-                                        <td><strong><?php echo $result['address']; ?></strong></td>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Date of Birth</th>
+                                        <th>NIC</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END students in batch table -->
+                                    require_once('pages/database/main_db.php');
 
-        <!-- START students in batch table -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
+                                    $tutor_main_select_query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
+                                            FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id AND r.permission_id = 3 
+                                            AND (SELECT COUNT(a.id) FROM allocation a WHERE a.student_id = u.id AND IFNULL(a.status,0) = 1) = 0 ORDER BY u.code";
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-uppercase">Allocated Student</h3>
-                    </div>
+                                    $query_execute = mysqli_query($con, $tutor_main_select_query);
 
-                    <div class="panel-body panel-body-table">
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-actions">
-                                <thead>
-                                <tr>
-                                    <th>Student Name</th>
-                                    <th>Batch Name</th>
-                                    <th>Module Name</th>
-                                    <th>Tutor Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <?php
-                                $allocation_view = "SELECT b.name batch_name, m.name module_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
-                                                        (SELECT u.name FROM user u WHERE u.id = a.tutor_id) tutor_name FROM allocation a, batch b, module m 
-                                                        WHERE a.batch_id = b.id AND a.module_id = m.id AND a.status = 1 AND a.student_id IS NOT NULL";
-
-                                $allocation_query = mysqli_query($con, $allocation_view);
-
-                                while ($student_data = mysqli_fetch_array($allocation_query)) {
-
+                                    while ($result = mysqli_fetch_array($query_execute)) {
+                                        ?>
+                                        <tr>
+                                            <td><strong><?php echo $result['code']; ?></strong></td>
+                                            <td><strong><?php echo $result['name']; ?></strong></td>
+                                            <td><strong><?php if($result['gender'] == 1){echo 'Male';} else {echo 'Female';}?></strong></td>
+                                            <td><strong><?php echo $result['date_of_birth']; ?></strong></td>
+                                            <td><strong><?php echo $result['nic_no']; ?></strong></td>
+                                            <td><strong><?php echo $result['mobile_no']; ?></strong></td>
+                                            <td><strong><?php echo $result['email']; ?></strong></td>
+                                            <td><strong><?php echo $result['address']; ?></strong></td>
+                                        </tr>
+                                        <?php
+                                    }
                                     ?>
-
-                                    <tr id="trow_3">
-                                        <td><?php echo $student_data['student_name']; ?></td>
-                                        <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
-                                        <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
-                                        <td><?php echo $student_data['tutor_name']; ?></td>
-                                        <td>
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>
-                                        </td>
-                                    </tr>
-
-                                    <?php
-                                }
-                                ?>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-uppercase">Allocated Student</h3>
+                        </div>
+
+                        <div class="panel-body panel-body-table">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-actions">
+                                    <thead>
+                                    <tr>
+                                        <th>Student Name</th>
+                                        <th>Batch Name</th>
+                                        <th>Module Name</th>
+                                        <th>Tutor Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <?php
+                                    $allocation_view = "SELECT a.id,b.name batch_name, m.name module_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
+                                                        (SELECT u.name FROM user u WHERE u.id = ag.tutor_id) tutor_name FROM allocation a, allocation_group ag, batch b, module m 
+                                                        WHERE ag.batch_id = b.id AND ag.module_id = m.id AND a.allocation_group_id = ag.id AND ag.status = 1 AND a.status = 1 
+                                                        AND a.student_id IS NOT NULL";
+
+                                    $allocation_query = mysqli_query($con, $allocation_view);
+
+                                    while ($student_data = mysqli_fetch_array($allocation_query)) {
+
+                                        ?>
+
+                                        <tr id="trow_3">
+                                            <td><?php echo $student_data['student_name']; ?></td>
+                                            <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
+                                            <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
+                                            <td><?php echo $student_data['tutor_name']; ?></td>
+                                            <td>
+                                                <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
+                                                <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="removeAllocation(<?php echo $student_data['id']; ?>)"><span class="fa fa-times"></span></button>
+                                            </td>
+                                        </tr>
+
+                                        <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <!-- END students in batch table -->
     </div>
     <!-- END PAGE CONTENT -->
 </div>
@@ -339,11 +291,12 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
     $('#main-form').on('submit', function(e){
         e.preventDefault();
-        let form_data = $('#main-form').serializeArray();
+        let allocationId = $('#allocation').val();
+        let students = $('#student').val();
 
         $.ajax({
             url : 'pages/database/allocate-student.php',
-            data : form_data,
+            data : {'allocation_id': allocationId, 'students': students},
             dataType : 'json',
             method : 'post',
             error: function(e){
@@ -360,6 +313,28 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             }
         });
     });
+
+    function removeAllocation(allocationId) {
+        $.ajax({
+            url : 'pages/database/remove-allocation.php',
+            data : {'allocation_id': allocationId},
+            dataType : 'json',
+            method : 'post',
+            error: function(e){
+                swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+            },
+            success : function(r){
+                if(r.message === 'success'){
+                    $("#edit-chat").css("visibility", "hidden");
+                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                } else if(r.message === 'empty'){
+                    swal ("Sorry", 'Fields Can not be empty', 'error');
+                } else if(r.message === 'exist'){
+                    swal ("Sorry", 'This Student Already In', 'warning');
+                }
+            }
+        });
+    }
 
 </script>
 </html>
