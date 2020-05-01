@@ -10,7 +10,7 @@
                     require_once('./pages/database/main_db.php');
                     $allocationId = $_SESSION['allocation_id'];
 
-                    $query = "SELECT d.id document_id, d.uuid, d.file_name, a.code FROM document d, allocation a WHERE d.allocation_id = a.id AND d.allocation_id IN ($allocationId) AND d.status = 1 ORDER BY a.id";
+                    $query = "SELECT d.id document_id, d.uuid, d.file_name, a.code FROM document d, allocation_group a WHERE d.allocation_id = a.id AND d.allocation_id IN ($allocationId) AND d.status = 1 ORDER BY a.id";
                     $execute = mysqli_query($con, $query);
                     while($doc = mysqli_fetch_assoc($execute)){
                         $filepath = $_SERVER['DOCUMENT_ROOT'] . "/uploads/" . $doc['uuid'] . "|" . $doc['file_name'];

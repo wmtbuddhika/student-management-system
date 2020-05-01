@@ -85,6 +85,25 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Module</label>
+                                    <div class="col-md-9">
+                                        <select name="module" class="form-control select" data-live-search="true">
+                                            <option selected disabled>Select Module</option>
+
+                                            <?php
+                                            $batch_query = "SELECT m.id, m.name FROM module m WHERE m.status = '1'";
+                                            $batch_result = mysqli_query($con, $batch_query);
+
+                                            while ($bact_data = mysqli_fetch_array($batch_result)) {
+                                                ?>
+
+                                                <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['name']; ?></option>
+
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">Tutor</label>
                                     <div class="col-md-9">
                                         <select name="tutor" class="form-control select" data-live-search="true">
@@ -209,18 +228,19 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                             <table class="table table-bordered table-striped table-actions">
                                 <thead>
                                 <tr>
-                                    <th>Batch Name</th>
-                                    <th>Tutor Name</th>
                                     <th>Student Name</th>
+                                    <th>Batch Name</th>
+                                    <th>Module Name</th>
+                                    <th>Tutor Name</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <?php
-                                $allocation_view = "SELECT b.name batch_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
-                                                        (SELECT u.name FROM user u WHERE u.id = a.tutor_id) tutor_name
-                                                        FROM allocation a, batch b WHERE a.batch_id = b.id AND a.status = 1";
+                                $allocation_view = "SELECT b.name batch_name, m.name module_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
+                                                        (SELECT u.name FROM user u WHERE u.id = a.tutor_id) tutor_name FROM allocation a, batch b, module m 
+                                                        WHERE a.batch_id = b.id AND a.module_id = m.id AND a.status = 1 AND a.student_id IS NOT NULL";
 
                                 $allocation_query = mysqli_query($con, $allocation_view);
 
@@ -229,9 +249,10 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     ?>
 
                                     <tr id="trow_3">
+                                        <td><?php echo $student_data['student_name']; ?></td>
+                                        <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
                                         <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
                                         <td><?php echo $student_data['tutor_name']; ?></td>
-                                        <td><?php echo $student_data['student_name']; ?></td>
                                         <td>
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>

@@ -66,19 +66,30 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                         <div class="panel-body">
                             <form class="form-horizontal" id="main-form">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Module</label>
+                                    <label class="col-md-3 control-label">Batch</label>
                                     <div class="col-md-9">
                                         <select name="batch" class="form-control select" data-live-search="true">
+                                            <option selected disabled>Select Batch</option>
+
+                                            <?php
+                                            $batch_query = "SELECT b.id, b.name FROM batch b WHERE b.status = '1'";
+                                            $batch_result = mysqli_query($con, $batch_query);
+
+                                            while ($bact_data = mysqli_fetch_array($batch_result)) {
+                                                ?>
+                                                <option value="<?php echo $bact_data['id']; ?>"><?php echo $bact_data['name']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Module</label>
+                                    <div class="col-md-9">
+                                        <select name="module" class="form-control select" data-live-search="true">
                                             <option selected disabled>Select Module</option>
 
                                             <?php
-                                                $batch_query = "SELECT
-                                                    module.id,
-                                                    module.`name`
-                                                FROM
-                                                    `module`
-                                                WHERE
-                                                    module.`status` = '1'";
+                                                $batch_query = "SELECT m.id, m.name FROM module m WHERE m.status = '1'";
                                                 $batch_result = mysqli_query($con, $batch_query);
 
                                                 while ($bact_data = mysqli_fetch_array($batch_result)) {
@@ -103,9 +114,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
                                             while($tutor_data = mysqli_fetch_array($tutor_result)){
                                                 ?>
-
                                                 <option value="<?php echo $tutor_data['id'];?>"><?php echo $tutor_data['name']; ?></option>
-
                                                 <?php
                                             }
                                             ?>
@@ -150,17 +159,16 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <thead>
                                 <tr>
                                     <th>Batch Name</th>
+                                    <th>Module Name</th>
                                     <th>Tutor Name</th>
-                                    <th>Student Name</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <?php
-                                $allocation_view = "SELECT b.name batch_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
-                                                        (SELECT u.name FROM user u WHERE u.id = a.tutor_id) tutor_name
-                                                        FROM allocation a, batch b WHERE a.batch_id = b.id AND a.status = 1";
+                                $allocation_view = "SELECT m.name module_name, b.name batch_name, (SELECT u.name FROM user u WHERE u.id = a.tutor_id) tutor_name
+                                                        FROM allocation a, batch b, module m WHERE a.module_id = m.id AND a.batch_id = b.id AND a.status = 1";
 
                                 $allocation_query = mysqli_query($con, $allocation_view);
 
@@ -170,8 +178,8 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
                                     <tr id="trow_3">
                                         <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
+                                        <td><strong><?php echo $student_data['module_name']; ?></strong></td>
                                         <td><?php echo $student_data['tutor_name']; ?></td>
-                                        <td><?php echo $student_data['student_name']; ?></td>
                                         <td>
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>

@@ -12,7 +12,7 @@
                             <select id="group" name="group" class="form-control select" data-live-search="true">
                                 <?php
                                 $allocationId = $_SESSION['allocation_id'];
-                                $batch_query = "SELECT a.id, a.code FROM allocation a WHERE a.id IN ($allocationId) AND a.status = 1";
+                                $batch_query = "SELECT a.id, a.code FROM allocation_group a WHERE a.id IN ($allocationId) AND a.status = 1";
 
                                 $batch_result = mysqli_query($con, $batch_query);
 

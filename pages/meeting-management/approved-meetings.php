@@ -21,8 +21,8 @@
                         </thead>
                         <tbody>
                         <?php
-                        $query = "SELECT m.id,a.code,m.title,m.schedule_date,m.status FROM allocation a,meeting m 
-                                                            WHERE a.id = m.allocation_id AND a.status = 1 AND m.status != 0 AND a.id IN ($allocationId)";
+                        $query = "SELECT m.id,a.code,m.title,m.schedule_date,m.status FROM allocation_group a,meeting m 
+                                  WHERE a.id = m.allocation_id AND a.status = 1 AND m.status != 0 AND a.id IN ($allocationId)";
                         $meetings = mysqli_query($con, $query);
                         while ($meeting = mysqli_fetch_array($meetings)) {
                             ?>

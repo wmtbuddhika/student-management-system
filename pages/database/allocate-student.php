@@ -7,6 +7,7 @@
 	
 	$code = $_REQUEST['code'];
 	$batch = $_REQUEST['batch'];
+	$module = $_REQUEST['module'];
 	$tutor = $_REQUEST['tutor'];
 	$student = $_REQUEST['student'];
 	
@@ -15,10 +16,14 @@
 
 	if((!empty($batch) || $batch != null) || (!empty($tutor) || $tutor != null)){
 
-		$main_tutor_query = "INSERT INTO allocation (student_id,tutor_id,batch_id,entered_by,status,code)
-                VALUES ('$student','$tutor','$batch','$enter_by',1,$code)";
+        $main_tutor_query = "INSERT INTO allocation_group (entered_by,status,code)
+                VALUES ('$enter_by',1,'$code')";
+        $query_execute = mysqli_query($con, $main_tutor_query);
+        $allocationId = mysqli_insert_id($con);
 
-		$query_execute = mysqli_query($con, $main_tutor_query);
+        $main_tutor_query = "INSERT INTO allocation (id,tutor_id,student_id,batch_id,module_id,status)
+                VALUES ($allocationId,'$tutor','$student','$batch','$module',1)";
+        $query_execute = mysqli_query($con, $main_tutor_query);
 		
 		if($query_execute){
 			$message = "success";

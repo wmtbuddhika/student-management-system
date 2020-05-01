@@ -19,7 +19,7 @@
                         require_once('pages/database/main_db.php');
                         $allocationId = $_SESSION['allocation_id'];
 
-                        $tutor_main_select_query = "SELECT b.id,a.code,b.title,b.content FROM blog b, allocation a WHERE a.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ORDER BY b.title";
+                        $tutor_main_select_query = "SELECT b.id,a.code,b.title,b.content FROM blog b, allocation_group a WHERE a.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ORDER BY b.title";
 
                         $query_execute = mysqli_query($con, $tutor_main_select_query);
 
