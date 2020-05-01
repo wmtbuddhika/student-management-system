@@ -23,7 +23,7 @@
                         <?php
                         $allocationId = $_SESSION['allocation_id'];
                         if ($allocationId != null) {
-                            $query = "SELECT m.id,ag.code,m.title,m.schedule_date,m.status,u.name FROM allocation_group ag,meeting m, user u, allocation a
+                            $query = "SELECT DISTINCT m.id,ag.code,m.title,m.schedule_date,m.status,u.name FROM allocation_group ag,meeting m, user u, allocation a
                                   WHERE a.allocation_group_id = ag.id AND m.entered_by = u.id AND ag.id = m.allocation_id AND ag.status = 1 AND m.status = 0 AND a.status = 1
                                   AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId) AND ag.id IN ($allocationId)";
                             $meetings = mysqli_query($con, $query);
