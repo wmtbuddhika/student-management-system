@@ -18,25 +18,38 @@
                     <?php
                         require_once('pages/database/main_db.php');
                         $allocationId = $_SESSION['allocation_id'];
+                        if ($allocationId != null) {
+                            $userId = $_SESSION['user_id'];
+                            $userType = $_SESSION['user_type'];
 
-                        $tutor_main_select_query = "SELECT b.id,a.code,b.title,b.content FROM blog b, allocation_group a WHERE a.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ORDER BY b.title";
+                            $query = "SELECT b.id,ag.code,b.title,b.content FROM blog b, allocation_group ag 
+                            WHERE ag.id = b.allocation_id AND b.status = 1 AND b.allocation_id IN ($allocationId) ";
 
-                        $query_execute = mysqli_query($con, $tutor_main_select_query);
+                            if ($userType == 3) {
+                                $query = $query . "AND (SELECT COUNT(a.id) FROM allocation a WHERE a.student_id = $userId AND a.status = 1 AND a.allocation_group_id = ag.id) > 0";
+                            }
 
-                        while ($result = mysqli_fetch_array($query_execute)) {
-                    ?>
+                            $query_execute = mysqli_query($con, $query);
 
-                    <tr>
-                        <td><strong><?php echo $result['code']; ?></strong></td>
-                        <td><strong><?php echo $result['title']; ?></strong></td>
-                        <td><strong><?php echo $result['content']; ?></strong></td>
-                        <td>
-                            <button onclick="editBlog(<?php echo $result['id']; ?>)" class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                            <button onclick="loadComments(<?php echo $result['id']; ?>)" class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-book"></span></button>
-                        </td>
-                    </tr>
+                            while ($result = mysqli_fetch_array($query_execute)) {
+                                ?>
 
-                    <?php 
+                                <tr>
+                                    <td><strong><?php echo $result['code']; ?></strong></td>
+                                    <td><strong><?php echo $result['title']; ?></strong></td>
+                                    <td><strong><?php echo $result['content']; ?></strong></td>
+                                    <td>
+                                        <button onclick="editBlog(<?php echo $result['id']; ?>)"
+                                                class="btn btn-default btn-rounded btn-condensed btn-sm"><span
+                                                    class="fa fa-pencil"></span></button>
+                                        <button onclick="loadComments(<?php echo $result['id']; ?>)"
+                                                class="btn btn-default btn-rounded btn-condensed btn-sm"><span
+                                                    class="fa fa-book"></span></button>
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
                         }
                      ?>
                     </tbody>

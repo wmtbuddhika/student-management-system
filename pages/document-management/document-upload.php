@@ -13,6 +13,8 @@
                                 <?php
                                 require_once('./pages/database/main_db.php');
                                 $allocationId = $_SESSION['allocation_id'];
+                                $userType = $_SESSION['user_type'];
+                                $userId = $_SESSION['user_id'];
                                 $query = "SELECT ag.id, ag.code FROM allocation_group ag, allocation a WHERE a.allocation_group_id = ag.id AND ag.status = 1 AND a.status = 1 AND ag.id IN ($allocationId)
                                           AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId)";
 
