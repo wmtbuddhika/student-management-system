@@ -15,7 +15,8 @@
 		
 		//login check query
 		$main_query = "SELECT u.id, r.permission_id user_type, u.name user_name, 
-                        (SELECT GROUP_CONCAT(a.id) FROM allocation a WHERE IF(r.permission_id = 2,a.tutor_id = u.id,a.student_id = u.id)) allocation_id
+                        (SELECT GROUP_CONCAT(a.id) FROM allocation_group ag LEFT JOIN allocation a ON ag.id = a.allocation_group_id 
+                        WHERE IF(r.permission_id = 2,ag.tutor_id = u.id,a.student_id = u.id)) allocation_id
                         FROM login l, user u, role r WHERE u.id = l.user_id AND l.id = r.login_id
                         AND l.user_name = '$user_name' AND l.password = '$password' AND u.status = 1";
 
