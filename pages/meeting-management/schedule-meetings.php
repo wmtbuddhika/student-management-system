@@ -11,8 +11,11 @@
                         <div class="col-md-9">
                             <select id="group" name="group" class="form-control select" data-live-search="true">
                                 <?php
+                                $userId = $_SESSION['user_id'];
                                 $allocationId = $_SESSION['allocation_id'];
-                                $batch_query = "SELECT a.id, a.code FROM allocation_group a WHERE a.id IN ($allocationId) AND a.status = 1";
+                                $userType = $_SESSION['user_type'];
+                                $batch_query = "SELECT a.id, ag.code FROM allocation_group ag, allocation a WHERE a.allocation_group_id = ag.id AND ag.status = 1 
+                                                AND a.status = 1 AND ag.id IN ($allocationId) AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId)";
 
                                 $batch_result = mysqli_query($con, $batch_query);
 

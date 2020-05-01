@@ -22,9 +22,9 @@
                         <tbody>
                         <?php
                         $allocationId = $_SESSION['allocation_id'];
-                        $query = "SELECT m.id,a.code,m.title,m.schedule_date,m.status,u.name FROM allocation_group a,meeting m, user u 
-                                  WHERE m.entered_by = u.id AND a.id = m.allocation_id AND a.status = 1 AND m.status = 0
-                                  AND a.id IN ($allocationId)";
+                        $query = "SELECT m.id,ag.code,m.title,m.schedule_date,m.status,u.name FROM allocation_group ag,meeting m, user u, allocation a
+                                  WHERE a.allocation_group_id = ag.id AND m.entered_by = u.id AND ag.id = m.allocation_id AND ag.status = 1 AND m.status = 0 AND a.status = 1
+                                  AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId) AND ag.id IN ($allocationId)";
                         $meetings = mysqli_query($con, $query);
                         while ($meeting = mysqli_fetch_array($meetings)) {
                             ?>
