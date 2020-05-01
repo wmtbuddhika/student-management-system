@@ -184,26 +184,44 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                     <div class="panel-body panel-body-table">
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-actions">
+                            <table class="table table-bordered table-striped table-actions dataTable">
                                 <thead>
                                 <tr>
-                                    <th width="50">Code</th>
-                                    <th>name</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+                                    <th>NIC</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr id="trow_1">
-                                    <td class="text-center">1</td>
-                                    <td><strong>John Doe</strong></td>
-                                </tr>
-                                <tr id="trow_2">
-                                    <td class="text-center">2</td>
-                                    <td><strong>Dmitry Ivaniuk</strong></td>
-                                </tr>
-                                <tr id="trow_3">
-                                    <td class="text-center">3</td>
-                                    <td><strong>Nadia Ali</strong></td>
-                                </tr>
+                                <?php
+                                require_once('pages/database/main_db.php');
+
+                                $tutor_main_select_query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
+                                            FROM user u LEFT JOIN allocation a ON u.id = a.student_id, login l, role r WHERE u.id = l.user_id 
+                                            AND r.login_id = l.id AND r.permission_id = 3 AND a.id IS NULL ORDER BY u.code";
+
+                                $query_execute = mysqli_query($con, $tutor_main_select_query);
+
+                                while ($result = mysqli_fetch_array($query_execute)) {
+                                    ?>
+                                    <tr>
+                                        <td><strong><?php echo $result['code']; ?></strong></td>
+                                        <td><strong><?php echo $result['name']; ?></strong></td>
+                                        <td><strong><?php if($result['gender'] == 1){echo 'Male';} else {echo 'Female';}?></strong></td>
+                                        <td><strong><?php echo $result['date_of_birth']; ?></strong></td>
+                                        <td><strong><?php echo $result['nic_no']; ?></strong></td>
+                                        <td><strong><?php echo $result['mobile_no']; ?></strong></td>
+                                        <td><strong><?php echo $result['email']; ?></strong></td>
+                                        <td><strong><?php echo $result['address']; ?></strong></td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
