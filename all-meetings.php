@@ -76,9 +76,9 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         require_once('pages/database/main_db.php');
 
                                         $tutor_main_select_query = "SELECT a2.code,m.schedule_date,m.title,
-                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a WHERE a.tutor_id = u.id AND a.code = a2.code) tutor, 
-                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a WHERE a.student_id = u.id AND a.code = a2.code) student,m.status
-                                            FROM meeting m, allocation a2 WHERE m.allocation_id = a2.id";
+                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a, allocation_group ag WHERE a.id = ag.id AND a.tutor_id = u.id AND ag.code = a2.code) tutor, 
+                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a, allocation_group ag WHERE a.id = ag.id AND a.student_id = u.id AND ag.code = a2.code) student,m.status
+                                            FROM meeting m, allocation_group a2 WHERE m.allocation_id = a2.id AND YEAR(m.schedule_date) = YEAR(NOW()) AND MONTH(m.schedule_date) = MONTH(NOW())";
 
                                         $query_execute = mysqli_query($con, $tutor_main_select_query);
 

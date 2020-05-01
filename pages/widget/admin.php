@@ -150,9 +150,7 @@
                     require_once('./pages/database/main_db.php');
 
                     $query = "SELECT COUNT(DISTINCT u.id) count FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id 
-                                AND r.permission_id = 3 
-                                AND u.id NOT IN (SELECT m.user_id FROM message m WHERE YEAR(m.created_date) = YEAR(NOW()) AND MONTH(m.created_date) = MONTH(NOW()) 
-                                GROUP BY m.user_id HAVING COUNT(m.user_id) >= 10)";
+                                AND r.permission_id = 3 AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY) GROUP BY m.user_id)";
 
                     $result = mysqli_query($con, $query);
 
