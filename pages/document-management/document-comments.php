@@ -29,6 +29,7 @@
                 </form>
                 <br/>
                 <hr>
+                <div class="table-responsive">
                 <table id="comments" class="table table-bordered table-striped table-actions">
                     <thead>
                     <tr>
@@ -41,6 +42,7 @@
                     <tr></tr>
                     </tbody>
                 </table>
+            </div>
             </div>
         </div>
     </div>

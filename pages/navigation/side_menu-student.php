@@ -1,4 +1,8 @@
 <ul class="x-navigation">
+    <li class="">
+        <a href="../../home.php">Student Management System</a>
+        <a href="#" class="x-navigation-control"></a>
+    </li>
     <li class="xn-profile">
         <div class="profile">
             <a href="../../home.php">

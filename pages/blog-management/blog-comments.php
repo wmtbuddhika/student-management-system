@@ -29,18 +29,20 @@
                 </form>
                 <br/>
                 <hr>
-                <table id="comments" class="table table-bordered table-striped table-actions">
-                    <thead>
-                    <tr>
-                        <th>name</th>
-                        <th>comment</th>
-                        <th width="200">date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr></tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="comments" class="table table-bordered table-striped table-actions">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>comment</th>
+                            <th width="200">date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

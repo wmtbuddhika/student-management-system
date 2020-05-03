@@ -5,6 +5,7 @@
             <div class="panel-body">
                 <input type="hidden" name="user_id" id="user_id" value="0">
                 <hr><h3 class="text-uppercase">ALL TUTORS</h3><hr>
+                <div class="table-responsive">
                 <table class="table table-bordered table-striped table-actions">
                     <thead>
                     <tr>
@@ -58,6 +59,7 @@
                         ?>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

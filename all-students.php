@@ -57,9 +57,10 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                         <div class="col-md-12">
                             <!-- START MASKED INPUT PLUGIN -->
                             <div class="panel panel-default">
-                                <div class="panel-body">
+                                <div class="panel-body table-responsive">
                                     <input type="hidden" name="user_id" id="user_id" value="0">
                                     <hr><h3 class="text-uppercase">ALL students</h3><hr>
+                                    <div class="table-responsive">
                                     <table class="table table-bordered table-striped table-actions dataTable">
                                         <thead>
                                         <tr>
@@ -99,6 +100,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         ?>
                                         </tbody>
                                     </table>
+                                    </div>
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary text-uppercase" id="export">Download</button>
                                     </div>
