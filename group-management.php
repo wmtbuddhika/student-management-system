@@ -213,13 +213,8 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
     </div>
     <!-- END PAGE CONTENT -->
 </div>
-<!-- END PAGE CONTAINER -->
+<?php require_once('pages/dashboard/footer.php'); ?>
 
-<!-- MESSAGE BOX-->
-
-<!-- END MESSAGE BOX-->
-
-<!-- START PRELOADS -->
 <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
 <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
 <!-- END PRELOADS -->
