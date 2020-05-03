@@ -45,10 +45,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Default</label>
+                        <label class="col-md-3 control-label">Time of Meeting *</label>
                         <div class="col-md-5">
                             <div class="input-group bootstrap-timepicker">
-                                <input type="text" class="form-control timepicker">
+                                <input type="text" class="form-control timepicker24" name="tom" id="tom" required>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                             </div>
                         </div>

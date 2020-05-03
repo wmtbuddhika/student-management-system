@@ -11,7 +11,7 @@ $meetings = array();
 
 if((!empty($meetingId) || $meetingId != null)){
 
-    $query = "SELECT m.id meeting_id,a.id,m.title,m.schedule_date,m.comment,m.status FROM meeting m,allocation a WHERE m.allocation_id = a.id
+    $query = "SELECT m.id meeting_id,a.id,m.title,m.schedule_date,m.schedule_time,m.comment,m.status FROM meeting m,allocation_group a WHERE m.allocation_id = a.id
                 AND m.id = ($meetingId)";
 
     $query_execute = mysqli_query($con, $query);

@@ -15,6 +15,7 @@
                             <th>Group</th>
                             <th>Meeting Topic</th>
                             <th>Scheduled Date</th>
+                            <th>Scheduled Time</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -23,7 +24,7 @@
                         <?php
                         $allocationId = $_SESSION['allocation_id'];
                         if ($allocationId != null) {
-                            $query = "SELECT DISTINCT m.id,ag.code,m.title,m.schedule_date,m.status,u.name FROM allocation_group ag,meeting m, user u, allocation a
+                            $query = "SELECT DISTINCT m.id,ag.code,m.title,m.schedule_date,m.schedule_time,m.status,u.name FROM allocation_group ag,meeting m, user u, allocation a
                                   WHERE a.allocation_group_id = ag.id AND m.entered_by = u.id AND ag.id = m.allocation_id AND ag.status = 1 AND m.status != 0 AND a.status = 1
                                   AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId) AND ag.id IN ($allocationId)";
                             $meetings = mysqli_query($con, $query);
@@ -34,6 +35,7 @@
                                     <td class="text-center"><?php echo $meeting['code']; ?></td>
                                     <td><strong><?php echo $meeting['title']; ?></strong></td>
                                     <td><?php echo $meeting['schedule_date']; ?></td>
+                                    <td><?php echo $meeting['schedule_time']; ?></td>
                                     <td><?php if ($meeting['status'] == 0) {
                                             echo 'Pending';
                                         } elseif ($meeting['status'] == 1) {

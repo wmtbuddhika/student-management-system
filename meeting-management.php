@@ -141,6 +141,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                     $('#group').val(r.meetings[0].id);
                     $('#meeting_topic').val(r.meetings[0].title);
                     $('#dom').val(r.meetings[0].schedule_date);
+                    $('#tom').val(r.meetings[0].schedule_time);
                     $('#meeting_message').val(r.meetings[0].comment);
                 }
             });

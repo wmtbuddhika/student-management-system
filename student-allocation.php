@@ -68,8 +68,9 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                         </div>
                         <div class="panel-body">
                             <form class="form-horizontal" id="main-form">
+                                <input type="hidden" name="edit" id="edit">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Group</label>
+                                    <label class="col-md-3 control-label">Group *</label>
                                     <div class="col-md-4">
                                         <select id="allocation" name="allocation" class="form-control select" data-live-search="true">
                                             <option selected disabled>Select Group</option>
@@ -92,7 +93,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Student</label>
+                                    <label class="col-md-3 control-label">Student *</label>
                                     <div class="col-md-9">
                                         <select id="student" name="student" class="form-control select" data-live-search="true" multiple>
 
@@ -196,6 +197,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <table class="table table-bordered table-striped table-actions">
                                     <thead>
                                     <tr>
+                                        <th>Group</th>
                                         <th>Student Name</th>
                                         <th>Batch Name</th>
                                         <th>Module Name</th>
@@ -206,7 +208,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     <tbody>
 
                                     <?php
-                                    $allocation_view = "SELECT a.id,b.name batch_name, m.name module_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
+                                    $allocation_view = "SELECT ag.code,a.id,b.name batch_name, m.name module_name, (SELECT u.name FROM user u WHERE u.id = a.student_id) student_name, 
                                                         (SELECT u.name FROM user u WHERE u.id = ag.tutor_id) tutor_name FROM allocation a, allocation_group ag, batch b, module m 
                                                         WHERE ag.batch_id = b.id AND ag.module_id = m.id AND a.allocation_group_id = ag.id AND ag.status = 1 AND a.status = 1 
                                                         AND a.student_id IS NOT NULL";
@@ -218,12 +220,13 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         ?>
 
                                         <tr id="trow_3">
+                                            <td><?php echo $student_data['code']; ?></td>
                                             <td><?php echo $student_data['student_name']; ?></td>
                                             <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
                                             <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
                                             <td><?php echo $student_data['tutor_name']; ?></td>
                                             <td>
-                                                <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
+                                                <button class="btn btn-default btn-rounded btn-condensed btn-sm" onClick="loadAllocation(<?php echo $student_data['id']; ?>)"><span class="fa fa-pencil"></span></button>
                                                 <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="removeAllocation(<?php echo $student_data['id']; ?>)"><span class="fa fa-times"></span></button>
                                             </td>
                                         </tr>
@@ -276,8 +279,6 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <script type="text/javascript" src="js/actions.js"></script>
 <!-- END TEMPLATE -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
 <noscript><div><img src="https://mc.yandex.ru/watch/25836617" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 </body>
@@ -288,10 +289,14 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
         e.preventDefault();
         let allocationId = $('#allocation').val();
         let students = $('#student').val();
+        let edit = $('#edit').val();
+
+        if (allocationId == null) {swal ("", 'Select a Group', 'warning');return}
+        if (students == null) {swal ("", 'Select at least one Student', 'warning');return}
 
         $.ajax({
             url : 'pages/database/allocate-student.php',
-            data : {'allocation_id': allocationId, 'students': students},
+            data : {'allocation_id': allocationId, 'students': students, 'edit': edit},
             dataType : 'json',
             method : 'post',
             error: function(e){
@@ -299,7 +304,11 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             },
             success : function(r){
                 if(r.message === 'success'){
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                    swal("Success", 'Students Allocated Successfully', 'success').then(function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 } else if(r.message === 'empty'){
                     swal ("Sorry", 'Fields Can not be empty', 'error');
                 } else if(r.message === 'exist'){
@@ -309,9 +318,9 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
         });
     });
 
-    function removeAllocation(allocationId) {
+    function loadAllocation(allocationId) {
         $.ajax({
-            url : 'pages/database/remove-allocation.php',
+            url : 'pages/database/load-student-allocation.php',
             data : {'allocation_id': allocationId},
             dataType : 'json',
             method : 'post',
@@ -319,14 +328,48 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
             },
             success : function(r){
-                if(r.message === 'success'){
-                    $("#edit-chat").css("visibility", "hidden");
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
-                } else if(r.message === 'empty'){
-                    swal ("Sorry", 'Fields Can not be empty', 'error');
-                } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Student Already In', 'warning');
-                }
+                $('#edit').val(r.allocation[0].allocation_id);
+                setTimeout(function(){
+                    $('#allocation').val(r.allocation[0].id);
+                    $('button[data-id="allocation"] span:first').text(r.allocation[0].code);
+                }, 500);
+                setTimeout(function(){
+                    $('#student').val(r.allocation[0].student_ids);
+                    $('button[data-id="student"] span:first').text(r.allocation[0].students);
+                }, 500);
+            }
+        });
+    }
+
+    function removeAllocation(allocationId) {
+        swal({
+            title: "Confirmation",
+            text: "Are you sure ?",
+            icon: "warning",
+            buttons: ['NO', 'YES'],
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : 'pages/database/remove-allocation.php',
+                    data : {'allocation_id': allocationId},
+                    dataType : 'json',
+                    method : 'post',
+                    error: function(e){
+                        swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                    },
+                    success : function(r){
+                        swal({
+                            title: "Success",
+                            text: "Allocation Removed Successfully",
+                            icon: "success",
+                            buttons: [null,'OK'],
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
             }
         });
     }

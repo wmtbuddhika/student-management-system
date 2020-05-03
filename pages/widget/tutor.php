@@ -25,7 +25,7 @@
 
                     $query = "SELECT COUNT(m.id) count FROM meeting m WHERE YEAR(m.schedule_date) = YEAR(NOW())
                                 AND MONTH(m.schedule_date) = MONTH(NOW())";
-                    if ($userType != 1) {
+                    if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND m.allocation_id IN ($allocationId)";
                     }
 
@@ -62,7 +62,7 @@
                     $query = "SELECT COUNT(DISTINCT u.id) count FROM user u, login l, role r, allocation a WHERE u.id = l.user_id AND r.login_id = l.id 
                                 AND r.permission_id = 3 AND a.student_id = u.id AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY) GROUP BY m.user_id)";
 
-                    if ($userType != 1) {
+                    if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND a.allocation_group_id IN ($allocationId)";
                     }
 
@@ -100,7 +100,7 @@
 
                     $query = "SELECT COUNT(d.id) count FROM document d WHERE YEAR(d.created_date) = YEAR(NOW())
                                 AND MONTH(d.created_date) = MONTH(NOW()) ";
-                    if ($userType != 1) {
+                    if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND d.allocation_id IN ($allocationId)";
                     }
 
@@ -137,7 +137,7 @@
                     $query = "SELECT COUNT(b.id) count FROM blog b WHERE YEAR(b.created_date) = YEAR(NOW())
                                 AND MONTH(b.created_date) = MONTH(NOW())";
 
-                    if ($userType != 1) {
+                    if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND b.allocation_id IN ($allocationId)";
                     }
 
@@ -175,7 +175,7 @@
                     $query = "SELECT COUNT(m.id) count FROM message m WHERE YEAR(m.created_date) = YEAR(NOW())
                                 AND MONTH(m.created_date) = MONTH(NOW()) AND m.user_id = $userId ";
 
-                    if ($userType != 1) {
+                    if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND m.allocation_id IN ($allocationId)";
                     }
 
