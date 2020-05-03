@@ -76,13 +76,20 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         <tbody>
                                         <?php
                                         require_once('pages/database/main_db.php');
+                                        $userType = $_SESSION['user_type'];
+                                        $allocationId = $_SESSION['allocation_id'];
 
-                                        $tutor_main_select_query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
+                                        $query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
                                             FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id AND r.permission_id = 3
                                             AND u.id IN (SELECT DISTINCT u.id count FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id 
-                                            AND r.permission_id = 3 AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY) GROUP BY m.user_id)) ORDER BY u.code";
+                                            AND r.permission_id = 3 AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY)";
 
-                                        $query_execute = mysqli_query($con, $tutor_main_select_query);
+                                        if ($userType != 1) {
+                                            $query = $query . "AND m.allocation_id IN ($allocationId)";
+                                        }
+                                        $query = $query . "GROUP BY m.user_id)) ORDER BY u.code";
+
+                                        $query_execute = mysqli_query($con, $query);
 
                                         while ($result = mysqli_fetch_array($query_execute)) {
                                             ?>

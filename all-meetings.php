@@ -74,13 +74,19 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         <tbody>
                                         <?php
                                         require_once('pages/database/main_db.php');
+                                        $userType = $_SESSION['user_type'];
+                                        $allocationId = $_SESSION['allocation_id'];
 
-                                        $tutor_main_select_query = "SELECT a2.code,m.schedule_date,m.title,
-                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a, allocation_group ag WHERE a.id = ag.id AND a.tutor_id = u.id AND ag.code = a2.code) tutor, 
+                                        $query = "SELECT a2.code,m.schedule_date,m.title,
+                                            (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a, allocation_group ag WHERE a.id = ag.id AND ag.tutor_id = u.id AND ag.code = a2.code) tutor, 
                                             (SELECT GROUP_CONCAT(DISTINCT u.name) FROM user u, allocation a, allocation_group ag WHERE a.id = ag.id AND a.student_id = u.id AND ag.code = a2.code) student,m.status
                                             FROM meeting m, allocation_group a2 WHERE m.allocation_id = a2.id AND YEAR(m.schedule_date) = YEAR(NOW()) AND MONTH(m.schedule_date) = MONTH(NOW())";
 
-                                        $query_execute = mysqli_query($con, $tutor_main_select_query);
+                                        if ($userType != 1) {
+                                            $query = $query . "AND m.allocation_id IN ($allocationId)";
+                                        }
+
+                                        $query_execute = mysqli_query($con, $query);
 
                                         while ($result = mysqli_fetch_array($query_execute)) {
                                             ?>
