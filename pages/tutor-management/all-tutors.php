@@ -8,44 +8,54 @@
                 <table class="table table-bordered table-striped table-actions">
                     <thead>
                     <tr>
-                        <th width="50">CODE</th>
-                        <th>name</th>
-                        <th width="100">status</th>
-                        <th width="100">date</th>
-                        <th width="120">actions</th>
+                        <th>#</th>
+                        <th>CODE</th>
+                        <th>NAME</th>
+                        <th>DOB</th>
+                        <th>NIC</th>
+                        <th>MOBILE</th>
+                        <th>ACTION</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr id="trow_1">
-                        <td class="text-center">1</td>
-                        <td><strong>John Doe</strong></td>
-                        <td><span class="label label-success">New</span></td>
-                        <td>24/09/2015</td>
-                        <td>
-                            <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_1');"><span class="fa fa-times"></span></button>
-                        </td>
-                    </tr>
-                    <tr id="trow_2">
-                        <td class="text-center">2</td>
-                        <td><strong>Dmitry Ivaniuk</strong></td>
-                        <td><span class="label label-warning">Pending</span></td>
-                        <td>23/09/2015</td>
-                        <td>
-                            <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_2');"><span class="fa fa-times"></span></button>
-                        </td>
-                    </tr>
-                    <tr id="trow_3">
-                        <td class="text-center">3</td>
-                        <td><strong>Nadia Ali</strong></td>
-                        <td><span class="label label-info">In Queue</span></td>
-                        <td>22/09/2015</td>
-                        <td>
-                            <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>
-                        </td>
-                    </tr>
+                        <?php 
+
+                            require_once('pages/database/main_db.php');
+
+                            $selec_tutors = "SELECT
+                                `user`.id,
+                                `user`.`code`,
+                                `user`.`name`,
+                                `user`.date_of_birth,
+                                `user`.nic_no,
+                                `user`.mobile_no,
+                                `user`.email,
+                                login.user_name,
+                                login.`password`
+                            FROM
+                                `user`
+                            INNER JOIN login ON `user`.id = login.user_id
+                            INNER JOIN role ON login.id = role.login_id AND role.permission_id = 2";
+
+                            $tutor_query = mysqli_query($con, $selec_tutors);
+
+                            while($row_data = mysqli_fetch_array($tutor_query)){
+                         ?>
+                        <tr id="trow_1">
+                            <td><?php echo $row_data['id']; ?></td>
+                            <td><?php echo $row_data['code']; ?></td>
+                            <td><?php echo $row_data['name']; ?></td>
+                            <td><?php echo $row_data['date_of_birth']; ?></td>
+                            <td><?php echo $row_data['nic_no']; ?></td>
+                            <td><?php echo $row_data['mobile_no']; ?></td>
+                            <td>
+                                <button value="<?php echo $row_data['id']; ?>" class="btn btn-default btn-rounded btn-condensed btn-sm edit"><span class="fa fa-pencil"></span></button>
+                                <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_1');"><span class="fa fa-times"></span></button>
+                            </td>
+                        </tr>
+                        <?php 
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>

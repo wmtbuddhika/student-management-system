@@ -44,19 +44,35 @@
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="home.php">Home</a></li>
-                    <li class="active">Tutor Management</li>
+                    <li class="active">Tutor Registration</li>
                 </ul>
                 <!-- END BREADCRUMB -->    
 
                 <!-- PAGE TITLE -->
                 <div class="page-title">                    
-                    <h2>TUTOR MANAGEMENT</h2>
+                    <h2 class="text-uppercase">TUTOR Registration</h2>
                 </div>
                 <!-- END PAGE TITLE -->                                   
                 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
-                    <?php require_once('pages/tutor-management/search-tutor.php'); ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- START MASKED INPUT PLUGIN -->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <hr><h3 class="text-uppercase">Search tutor</h3><hr>
+                                        <div class="col-md-11">
+                                            <select name="search" id="search" style="width:100%;">
+                                                <option value="" selected disabled>Search Tutor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <?php require_once('pages/tutor-management/tutor-details.php'); ?>
 
@@ -82,7 +98,7 @@
         $('#search').select2({
             minimumInputLength: 2,
             ajax: {
-                url: '__data_fol/employee_select_2.php',
+                url: 'pages/database/select-user.php',
                 dataType: 'json',
                 delay: 100,
                 data: function (term) {
@@ -103,7 +119,18 @@
 
         $('#main-form').on('submit', function(e){
             e.preventDefault();
-            let form_data = $('#main-form, #main-form-other-config').serializeArray();
+
+            let operation_status = $('#operation').val();
+            let toperation = "";
+
+               if(operation_status > 0){
+                    toperation = "UPDATE";
+               } else {
+                    toperation = "INSERT";
+               }
+
+            let form_data = $('#main-form').serializeArray();
+            form_data.push({name:'t_operation', value:toperation});
 
             $.ajax({
                 url : 'pages/database/save-user.php',
@@ -121,15 +148,74 @@
                         swal ("Sorry", 'Fields Can not be empty', 'error');
                     } else if(r.message === 'exist'){
                         swal ("Sorry", 'This Tutor is Exists', 'warning');
+                    } else if(r.message === 'UPDATED'){
+                        swal ("UPDATED", 'TUTOR SUCCESSFULLY UPDATED', 'success');
+                    } else if(r.message === 'NOT UPDATED'){
+                        swal ("SORRY", 'TUTOR NOT UPDATED', 'success');
                     }
                 }
             });
         });
+
+        $('.edit').on('click', function(){
+           let id = $(this).val();
+
+        
+            $.ajax({
+                url : 'pages/database/tutor_data.php',
+                dataType: 'json',
+                data : {
+                    tutor_id : id
+                },
+                method : 'post',
+                error : function(e){
+                    alert ('Somthing goes Wrong');
+                },
+                success : function(r){
+                    var tresult = r.result;
+                    var tmessege = r.messege;
+                    var tdata = r.data;
+
+                    if(tresult){
+                        //User Details Initiate
+                        $('#operation').val('1');
+                        $('#user_id').val(tdata.ID);
+                        $('#code').val(tdata.CODE);
+                        $('#full_name').val(tdata.NAME);
+                        $('#calling_name').val(tdata.CALLING_NAME);
+                        $('#nic_name').val(tdata.NIC);
+                        $('#dob').val(tdata.DOB);
+                        $('#dob').val(tdata.DOB);
+
+                        setTimeout(function(){ 
+                            $('#Nationality').val(tdata.NATIONALITY); 
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $('#marital_status').val(tdata.MARITIAL); 
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $('#gender').val(tdata.GENDER); 
+                        }, 500);
+
+                        var bool_ot_pay = (tdata.STATUS == 1) ? true : false;
+                        $('#active').prop('checked',bool_ot_pay);
+
+                        //Contact Details
+                        $('#address').val(tdata.ADDRESS);
+                        $('#mobile_no').val(tdata.MOBILE);
+                        $('#email').val(tdata.EMAIL);
+                        $('#land_number').val(tdata.LAND_NUM);
+                        $('#office_number').val(tdata.OFFICE_NUM);
+
+                        //Login Details
+                        $('#user_name').val(tdata.USER_NAME);
+                        $('#password').val(tdata.PASSWORD);
+                    }
+                }
+            });
+
+        });
     </script>
 </html>
-
-
-
-
-
-

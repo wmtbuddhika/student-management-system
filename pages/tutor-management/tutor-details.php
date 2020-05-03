@@ -7,6 +7,7 @@
             <!-- START MASKED INPUT PLUGIN -->
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <input type="hidden" id="operation" name="operation" value="0">
                     <input type="hidden" name="user_id" id="user_id" value="0">
                     <hr><h3 class="text-uppercase">TUTOR DETAILS</h3><hr>
                     <div class="col-md-6">
@@ -61,7 +62,7 @@
                             <label class="col-md-3 control-label">Marital Status</label>
                             <div class="col-md-3">
                                 <select name="marital_status" id="marital_status">
-                                    <option value="" disabled>Choose option</option>
+                                    <option value="" selected disabled>Choose option</option>
                                     <option value="1">Single</option>
                                     <option value="2">Married</option>
                                 </select>
@@ -71,7 +72,7 @@
                             <label class="col-md-3 control-label">Gender</label>
                             <div class="col-md-3">
                                 <select name="gender" id="gender">
-                                    <option value="" disabled>Choose option</option>
+                                    <option value=""selected disabled>Choose option</option>
                                     <option value="1">Male</option>
                                     <option value="2">Female</option>
                                 </select>
@@ -80,7 +81,7 @@
                         <div class="form-group" id="active_div">
                             <label class="col-md-3 control-label">Active *</label>
                             <div class="col-md-9">
-                                <input type="Checkbox" checked="checked" name="active" id="active" value="1" required/>
+                                <input type="Checkbox" name="active" id="active" value="1" required/>
                             </div>
                         </div>
                     </div>
