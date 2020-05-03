@@ -7,7 +7,8 @@ $comments = array();
 
 if((!empty($allocationId) && $allocationId != NULL)) {
 
-    $query = "SELECT code,name,batch_id,module_id,tutor_id,status FROM allocation_group WHERE id = $allocationId";
+    $query = "SELECT ag.id, ag.code, ag.name, b.id batch_id, b.name batch_name, m.id module_id, m.name module_name, u.id tutor_id, u.name tutor_name, ag.status 
+                FROM allocation_group ag, batch b, user u, module m WHERE ag.module_id = m.id AND ag.tutor_id = u.id AND ag.batch_id = b.id AND ag.id = $allocationId";
     $execute = mysqli_query($con, $query);
     while($comment = mysqli_fetch_assoc($execute)){
         array_push($comments, $comment);

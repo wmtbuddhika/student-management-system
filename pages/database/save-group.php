@@ -5,6 +5,7 @@
 
 	$enter_by = $_SESSION['user_id'];
 
+	$allocationId = $_REQUEST['allocation_id'];
 	$batch = $_REQUEST['batch'];
 	$module = $_REQUEST['module'];
 	$tutor = $_REQUEST['tutor'];
@@ -13,7 +14,28 @@
 
 	$message = "";
 
-	if((!empty($code) || $code != null)){
+	if ($allocationId != null) {
+        if((!empty($code) || $code != null)) {
+            $query = "SELECT id FROM allocation_group WHERE code = '$code' AND status = 1";
+
+            $result = mysqli_query($con, $query);
+            $count = mysqli_num_rows($result);
+
+            if ($count > 0) {
+                $message = "exist";
+            } else {
+                $query = "UPDATE allocation_group SET code = '$code',name = '$name',batch_id = '$batch',module_id = '$module',tutor_id = '$tutor',entered_by = '$enter_by',status = 1
+			WHERE id = $allocationId";
+
+                $query_execute = mysqli_query($con, $query);
+                if ($query_execute) {
+                    $message = "success";
+                } else {
+                    $message = "error";
+                }
+            }
+        }
+    } else if((!empty($code) || $code != null)){
 
 		$query = "SELECT id FROM allocation_group WHERE code = '$code' AND status = 1";
 

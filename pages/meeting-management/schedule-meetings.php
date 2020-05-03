@@ -45,6 +45,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Default</label>
+                        <div class="col-md-5">
+                            <div class="input-group bootstrap-timepicker">
+                                <input type="text" class="form-control timepicker">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Message *</label>
                         <div class="col-md-9 col-xs-12">
                             <textarea name="meeting_message" id="meeting_message" class="form-control" rows="5" required></textarea>

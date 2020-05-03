@@ -15,7 +15,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
     <!-- META SECTION -->
-    <title>SMS | Group Management</title>
+    <title>SMS | Group Registration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,13 +45,13 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="home.php">Home</a></li>
-            <li class="active">Group Management</li>
+            <li class="active">Group Registration</li>
         </ul>
         <!-- END BREADCRUMB -->
 
         <!-- PAGE TITLE -->
         <div class="page-title">
-            <h2 class="text-uppercase">Group Management</h2>
+            <h2 class="text-uppercase">Group Registration</h2>
         </div>
         <!-- END PAGE TITLE -->
 
@@ -70,7 +70,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Batch</label>
                                     <div class="col-md-9">
-                                        <select name="batch" id="batch" class="form-control select" data-live-search="true">
+                                        <select name="batch" id="batch" class="form-control select" data-live-search="true" required>
                                             <option selected disabled>Select Batch</option>
 
                                             <?php
@@ -89,7 +89,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Module</label>
                                     <div class="col-md-9">
-                                        <select name="module" class="form-control select" data-live-search="true">
+                                        <select name="module" id="module" class="form-control select" data-live-search="true">
                                             <option selected disabled>Select Module</option>
 
                                             <?php
@@ -108,7 +108,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Tutor</label>
                                     <div class="col-md-9">
-                                        <select name="tutor" class="form-control select" data-live-search="true">
+                                        <select name="tutor" id="tutor" class="form-control select" data-live-search="true">
                                             <option selected disabled>Select Tutor</option>
 
                                             <?php
@@ -255,6 +255,10 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
     $('#main-form').on('submit', function(e){
         e.preventDefault();
+        if ($('#batch').val() == null) {swal ("Sorry", 'Select Batch First', 'warning');return}
+        if ($('#module').val() == null) {swal ("Sorry", 'Select Module First', 'warning');return}
+        if ($('#tutor').val() == null) {swal ("Sorry", 'Select Tutor First', 'warning');return}
+
         let form_data = $('#main-form').serializeArray();
 
         $.ajax({
@@ -267,11 +271,15 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             },
             success : function(r){
                 if(r.message === 'success'){
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                    swal("Success", 'Group Saved Successfully', 'success').then(function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 } else if(r.message === 'empty'){
                     swal ("Sorry", 'Fields Can not be empty', 'error');
                 } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Student Already In', 'warning');
+                    swal ("Sorry", 'Group Code Exists', 'warning');
                 }
             }
         });
@@ -290,28 +298,51 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 $('#allocation_id').val(r.allocation[0].id);
                 $('#code').val(r.allocation[0].code);
                 $('#name').val(r.allocation[0].name);
-                $('#batch').val(r.allocation[0].batch_id).attr('selected', 'selected');
+                setTimeout(function(){
+                    $('#batch').val(r.allocation[0].batch_id);
+                    $('button[data-id="batch"] span:first').text(r.allocation[0].batch_name);
+                }, 500);
+                setTimeout(function(){
+                    $('#module').val(r.allocation[0].module_id);
+                    $('button[data-id="module"] span:first').text(r.allocation[0].module_name);
+                }, 500);
+                setTimeout(function(){
+                    $('#tutor').val(r.allocation[0].tutor_id);
+                    $('button[data-id="tutor"] span:first').text(r.allocation[0].tutor_name);
+                }, 500);
             }
         });
     }
 
     function removeAllocation(allocationId) {
-        $.ajax({
-            url : 'pages/database/remove-allocation-group.php',
-            data : {'allocation_id': allocationId},
-            dataType : 'json',
-            method : 'post',
-            error: function(e){
-                swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
-            },
-            success : function(r){
-                if(r.message === 'success'){
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
-                } else if(r.message === 'empty'){
-                    swal ("Sorry", 'Fields Can not be empty', 'error');
-                } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Student Already In', 'warning');
-                }
+        swal({
+            title: "Confirmation",
+            text: "Are you sure ?",
+            icon: "warning",
+            buttons: ['NO', 'YES'],
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : 'pages/database/remove-allocation-group.php',
+                    data : {'allocation_id': allocationId},
+                    dataType : 'json',
+                    method : 'post',
+                    error: function(e){
+                        swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                    },
+                    success : function(r){
+                        swal({
+                            title: "Success",
+                            text: "Group Removed Successfully",
+                            icon: "success",
+                            buttons: [null,'OK'],
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
             }
         });
     }
