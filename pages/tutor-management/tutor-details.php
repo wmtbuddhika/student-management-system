@@ -62,7 +62,6 @@
                             <label class="col-md-3 control-label">Marital Status</label>
                             <div class="col-md-3">
                                 <select name="marital_status" id="marital_status">
-                                    <option value="" selected disabled>Choose option</option>
                                     <option value="1">Single</option>
                                     <option value="2">Married</option>
                                 </select>
@@ -72,7 +71,6 @@
                             <label class="col-md-3 control-label">Gender</label>
                             <div class="col-md-3">
                                 <select name="gender" id="gender">
-                                    <option value=""selected disabled>Choose option</option>
                                     <option value="1">Male</option>
                                     <option value="2">Female</option>
                                 </select>
