@@ -14,6 +14,9 @@
 
 		$query = "UPDATE allocation_group SET status = 0 WHERE id = $allocationId";
         $query_execute = mysqli_query($con, $query);
+
+        $query = "UPDATE allocation SET status = 0 WHERE allocation_group_id = $allocationId";
+        $query_execute = mysqli_query($con, $query);
         if($query_execute){
             $message = "success";
         } else {
