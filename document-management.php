@@ -97,6 +97,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="js/plugins/moment.min.js"></script>
 <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- END THIS PAGE PLUGINS-->
 
 <!-- START TEMPLATE -->
