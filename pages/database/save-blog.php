@@ -16,25 +16,43 @@
 	if((!empty($blogData) || $blogData != null)){
 
 		if($blogId > 0){
-            $query = "UPDATE blog SET title = '$blogTitle', content = '$blogData',allocation_id = '$allocationId',entered_by = '$enteredBy',status = 1 WHERE id = $blogId";
-            $query_execute = mysqli_query($con, $query);
+            $query = "SELECT id FROM blog WHERE title = '$blogTitle' AND status = 1 AND allocation_id = '$allocationId'";
 
-            if($query_execute){
-                $message = "success";
+            $result = mysqli_query($con, $query);
+            $count = mysqli_num_rows($result);
+
+            if ($count > 0) {
+                $message = "exist";
             } else {
-                $message = "error";
+                $query = "UPDATE blog SET title = '$blogTitle', content = '$blogData',allocation_id = '$allocationId',entered_by = '$enteredBy',status = 1 WHERE id = $blogId";
+                $query_execute = mysqli_query($con, $query);
+
+                if ($query_execute) {
+                    $message = "success";
+                } else {
+                    $message = "error";
+                }
             }
 		} else {
-			$query = "INSERT INTO blog (title,content,allocation_id,entered_by,status)
+            $query = "SELECT id FROM blog WHERE title = '$blogTitle' AND status = 1 AND allocation_id = '$allocationId'";
+
+            $result = mysqli_query($con, $query);
+            $count = mysqli_num_rows($result);
+
+            if ($count > 0) {
+                $message = "exist";
+            } else {
+                $query = "INSERT INTO blog (title,content,allocation_id,entered_by,status)
 			VALUES ('$blogTitle','$blogData','$allocationId','$enteredBy',1)";
 
-			$query_execute = mysqli_query($con, $query);
-		
-			if($query_execute){
-				$message = "success";
-			} else {
-				$message = "error";
-			}
+                $query_execute = mysqli_query($con, $query);
+
+                if ($query_execute) {
+                    $message = "success";
+                } else {
+                    $message = "error";
+                }
+            }
 		}
 
 	} else {

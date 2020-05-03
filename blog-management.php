@@ -107,6 +107,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 <script type="text/javascript" src="js/actions.js"></script>
 
 <script type="text/javascript" src="js/demo_dashboard.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
 
@@ -135,7 +136,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
     });
 
     $('#blog-form').on('submit', function(e){
-        // e.preventDefault();
+        e.preventDefault();
         let blog_id = $('#blog_id').val();
         let allocation_id = $('#allocation_id').val();
         let blog_title = $('#title').val();
@@ -154,11 +155,29 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
             },
             success : function(r){
                 if(r.message === 'success'){
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                    swal({
+                        title: "Success",
+                        text: "Blog Saved Successfully",
+                        icon: "success",
+                        buttons: [null,'OK'],
+                    }).then(function(isConfirm) {
+                        if (isConfirm) {
+                            location.href = '../../blog-management.php';
+                        }
+                    });
                 } else if(r.message === 'empty'){
-                    swal ("Sorry", 'Fields Can not be empty', 'error');
+                    swal({
+                        title: "Success",
+                        text: "Blog Saved Successfully",
+                        icon: "success",
+                        buttons: [null,'OK'],
+                    }).then(function(isConfirm) {
+                        if (isConfirm) {
+                            return
+                        }
+                    });
                 } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Student Already In', 'warning');
+                    swal ("Sorry", 'This Blog Title Already Saved', 'warning');
                 }
             }
         });

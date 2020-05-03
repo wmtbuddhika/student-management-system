@@ -18,11 +18,12 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-md-1 control-label">Comment</label>
-                            <div class="col-md-10">
+                            <div class="col-md-8">
                                 <textarea type="text" class="form-control comment-value" value="" ></textarea>
                             </div>
                             <div class="btn-group pull-right">
                                 <button class="btn btn-primary text-uppercase" name="submit" type="button" onclick="saveComments()">save</button>
+                                <button class="btn btn-warning text-uppercase" name="submit" type="button" onclick="removeBlog()">remove blog</button>
                             </div>
                         </div>
                     </div>
@@ -102,6 +103,41 @@
                         scrollTop: $("#blog-comments").offset().top
                     }, 2000);
                 }
+            }
+        });
+    }
+
+    function removeBlog() {
+        var blogId = $(".comment-value").attr('id');
+
+        swal({
+            title: "Confirmation",
+            text: "Are you sure ?",
+            icon: "warning",
+            buttons: ['NO', 'YES'],
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : 'pages/database/remove-blog.php',
+                    data : {'blog_id': blogId},
+                    dataType : 'json',
+                    method : 'post',
+                    error: function(e){
+                        swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
+                    },
+                    success : function(r){
+                        swal({
+                            title: "Success",
+                            text: "Blog Removed Successfully",
+                            icon: "success",
+                            buttons: [null,'OK'],
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                location.href = '../../blog-management.php';
+                            }
+                        });
+                    }
+                });
             }
         });
     }
