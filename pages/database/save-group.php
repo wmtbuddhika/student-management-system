@@ -16,7 +16,7 @@
 
 	if ($allocationId != null) {
         if((!empty($code) || $code != null)) {
-            $query = "SELECT id FROM allocation_group WHERE code = '$code' AND status = 1";
+            $query = "SELECT id FROM allocation_group WHERE code = '$code' AND status = 1 AND id != $allocationId";
 
             $result = mysqli_query($con, $query);
             $count = mysqli_num_rows($result);
