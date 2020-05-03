@@ -177,7 +177,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                         }
                     });
                 } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Blog Title Already Saved', 'warning');
+                    swal ("Sorry", 'This Blog Title Already Exists', 'warning');
                 }
             }
         });
