@@ -6,13 +6,14 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <input type="hidden" name="user_id" id="user_id" value="0">
+                    <input type="hidden" id="operation" name="operation" value="0">
                     <hr><h3 class="text-uppercase">STUDENT DETAILS</h3><hr>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Student Code *</label>
+                            <label class="col-md-3 control-label">Student ID *</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" value="" name="code" id="epf_no" required/>
+                                <input type="text" class="form-control" value="" name="code" id="code" required/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,7 +77,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" id="active_div">
+                        <div class="form-group" id="active_div" hidden>
                             <label class="col-md-3 control-label">Active *</label>
                             <div class="col-md-9">
                                 <input type="Checkbox" checked="checked" name="active" id="active" value="1" required/>
@@ -105,13 +106,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Mobile No</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="mobile_no" id="mobile_no"/>
+                                <input type="number" class="form-control" value="" name="mobile_no" id="mobile_no"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">E-mail *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="email" id="email" required/>
+                                <input type="email" class="form-control" value="" name="email" id="email" required/>
                             </div>
                         </div>
                     </div>
@@ -119,13 +120,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Land Phone</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="land_number" id="land_number"/>
+                                <input type="number" class="form-control" value="" name="land_number" id="land_number"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Office Line</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="office_number" id="office_number"/>
+                                <input type="number" class="form-control" value="" name="office_number" id="office_number"/>
                             </div>
                         </div>
                     </div>

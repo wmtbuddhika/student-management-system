@@ -3,9 +3,10 @@
         <!-- START MASKED INPUT PLUGIN -->
         <div class="panel panel-default">
             <div class="panel-body">
-                <input type="hidden" name="user_id" id="user_id" value="0">
+                <input type="hidden" name="operation" id="operation" value="0">
                 <hr><h3 class="text-uppercase">MODULE DETAILS</h3><hr>
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="main-form" method="POST">
+                    <input type="hidden" name="module_id" id="module_id" value="0">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Module Code *</label>
@@ -24,13 +25,13 @@
                          <div class="form-group">
                             <label class="col-md-3 control-label">Remarks</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" value="" name="remark"/>
+                                <input type="text" class="form-control" value="" name="remark" id="remark" />
                             </div>
                         </div>
                         <div class="form-group" id="active_div">
                             <label class="col-md-3 control-label">Active *</label>
                             <div class="col-md-9">
-                                <input type="Checkbox" checked="checked" name="active" id="active" value="1" required/>
+                                <input type="Checkbox" checked="checked" name="active" id="active" value="1"/>
                             </div>
                         </div>
                         <div class="btn-group pull-right">

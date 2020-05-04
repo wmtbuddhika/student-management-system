@@ -13,7 +13,7 @@
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>        
         <!-- META SECTION -->
-        <title>SMS | Student Management</title>
+        <title>SMS | Student Registration</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,20 +44,18 @@
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="home.php">Home</a></li>
-                    <li class="active">Student Management</li>
+                    <li class="active">Student Registration</li>
                 </ul>
                 <!-- END BREADCRUMB -->    
 
                 <!-- PAGE TITLE -->
                 <div class="page-title">                    
-                    <h2 class="text-uppercase">STUDENT Management</h2>
+                    <h2 class="text-uppercase">STUDENT Registration</h2>
                 </div>
                 <!-- END PAGE TITLE -->                                   
                 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
-                    <?php require_once('pages/student-management/search-students.php'); ?>
-
                     <?php require_once('pages/student-management/student-details.php'); ?>
 
                     <?php require_once('pages/student-management/all-students.php'); ?>
@@ -73,56 +71,22 @@
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->                  
-        
-        <!-- START SCRIPTS -->
-        <!-- START PLUGINS -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-        <!-- END PLUGINS -->
-
-        <!-- START THIS PAGE PLUGINS-->        
-        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-
-        <script type="text/javascript" src="js/plugins/select2/js/select2.full.min.js"></script>
-        
-        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
-        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
-        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
-        
-        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
-        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- END THIS PAGE PLUGINS-->        
-
-        <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
-        
-        <script type="text/javascript" src="js/plugins.js"></script>
-        <script type="text/javascript" src="js/actions.js"></script>
-        
-        <script type="text/javascript" src="js/demo_dashboard.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <!-- END TEMPLATE -->
-    <!-- END SCRIPTS -->
+        <?php require_once('pages/plugings.php'); ?>
 
     </body>
     <script type="text/javascript">
         $('#search').select2({
             minimumInputLength: 2,
             ajax: {
-                url: '__data_fol/employee_select_2.php',
+                url: 'pages/database/select-user.php',
                 dataType: 'json',
                 delay: 100,
                 data: function (term) {
-                    return term;
+                    return {
+                        term : term,
+                        rol : '3'
+                    };
+
                 },
                 processResults: function (data) {
                     return {
@@ -139,7 +103,18 @@
 
         $('#main-form').on('submit', function(e){
             e.preventDefault();
-            let form_data = $('#main-form, #main-form-other-config').serializeArray();
+            
+            let operation_status = $('#operation').val();
+            let toperation = "";
+
+               if(operation_status > 0){
+                    toperation = "UPDATE";
+               } else {
+                    toperation = "INSERT";
+               }
+
+            let form_data = $('#main-form').serializeArray();
+            form_data.push({name:'t_operation', value:toperation});
 
             $.ajax({
                 url : 'pages/database/save-user.php',
@@ -150,15 +125,147 @@
                     swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
                 },
                 success : function(r){
-                    if(r.message === 'success'){
-                        swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
+                   if(r.message === 'success'){
+                       swal({
+                           title: "Success",
+                           text: "Student Registered Successfully",
+                           icon: "success",
+                           buttons: [null,'OK'],
+                       }).then(function(isConfirm) {
+                           if (isConfirm) {
+                               location.href = 'student-management.php';
+                           }
+                       });
                     } else if(r.message === 'empty'){
-                        swal ("Sorry", 'Fields Can not be empty', 'error');
+                        swal ("SORRY", 'FIELDS CAN NOT BE EMPTY', 'error');
                     } else if(r.message === 'exist'){
-                        swal ("Sorry", 'This Student Already In', 'warning');
+                        swal ("SORRY", 'THIS IS EXISTING TUTOR', 'warning');
+                    } else if(r.message === 'UPDATED'){
+                       swal({
+                           title: "Updated",
+                           text: "Student Updated Successfully",
+                           icon: "success",
+                           buttons: [null,'OK'],
+                       }).then(function(isConfirm) {
+                           if (isConfirm) {
+                               location.href = 'student-management.php';
+                           }
+                       });
+                    } else if(r.message === 'NOT UPDATED'){
+                        swal ("SORRY", 'STUDENT NOT UPDATED', 'success');
                     }
                 }
             });
+        });
+
+        $('.edit').on('click', function(){
+           let id = $(this).val();
+
+        
+            $.ajax({
+                url : 'pages/database/tutor_data.php',
+                dataType: 'json',
+                data : {
+                    tutor_id : id
+                },
+                method : 'post',
+                error : function(e){
+                    alert ('Somthing goes Wrong');
+                },
+                success : function(r){
+                    var tresult = r.result;
+                    var tmessege = r.messege;
+                    var tdata = r.data;
+
+                    if(tresult){
+                        //User Details Initiate
+                        $('#operation').val('1');
+                        $('#user_id').val(tdata.ID);
+                        $('#code').val(tdata.CODE);
+                        $('#full_name').val(tdata.NAME);
+                        $('#calling_name').val(tdata.CALLING_NAME);
+                        $('#nic_name').val(tdata.NIC);
+                        $('#dob').val(tdata.DOB);
+                        $('#dob').val(tdata.DOB);
+
+                        setTimeout(function(){ 
+                            $('#Nationality').val(tdata.NATIONALITY); 
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $('#marital_status').val(tdata.MARITIAL); 
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $('#gender').val(tdata.GENDER); 
+                        }, 500);
+
+                        var bool_ot_pay = (tdata.STATUS == 1) ? true : false;
+                        $('#active').prop('checked',bool_ot_pay);
+
+                        //Contact Details
+                        $('#address').val(tdata.ADDRESS);
+                        $('#mobile_no').val(tdata.MOBILE);
+                        $('#email').val(tdata.EMAIL);
+                        $('#land_number').val(tdata.LAND_NUM);
+                        $('#office_number').val(tdata.OFFICE_NUM);
+
+                        //Login Details
+                        $('#user_name').val(tdata.USER_NAME);
+                        $('#password').val(tdata.PASSWORD);
+                    }
+                }
+            });
+
+        });
+
+        $('.delete').on('click', function(){
+            let delete_id = $(this).val();
+
+            swal({
+                title: "Confirmation",
+                text: "Are you sure ?",
+                icon: "warning",
+                buttons: ['NO', 'YES'],
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url : 'pages/database/save-user.php',
+                            method : 'post',
+                            data : {
+                                delete_id : delete_id,
+                                m_operation : 'DELETE'
+                            },
+                            dataType : 'json',
+                            error : function(e){
+                                swal({
+                                    title: "Success",
+                                    text: "Student Removed Successfully",
+                                    icon: "success",
+                                    buttons: [null,'OK'],
+                                }).then(function(isConfirm) {
+                                    if (isConfirm) {
+                                        location.href = 'student-management.php';
+                                    }
+                                });
+                            },
+                            success : function(r){
+                                swal({
+                                    title: "Success",
+                                    text: "Student Removed Successfully",
+                                    icon: "success",
+                                    buttons: [null,'OK'],
+                                }).then(function(isConfirm) {
+                                    if (isConfirm) {
+                                        location.href = 'student-management.php';
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
         });
     </script>
 </html>

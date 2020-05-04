@@ -2,54 +2,57 @@
     <div class="col-md-12">
         <!-- START MASKED INPUT PLUGIN -->
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body table-responsive">
                 <input type="hidden" name="user_id" id="user_id" value="0">
                 <hr><h3 class="text-uppercase">ALL BATCHES</h3><hr>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-actions">
-                        <thead>
-                        <tr>
-                            <th width="50">CODE</th>
-                            <th>name</th>
-                            <th width="100">status</th>
-                            <th width="100">date</th>
-                            <th width="120">actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr id="trow_1">
-                            <td class="text-center">1</td>
-                            <td><strong>John Doe</strong></td>
-                            <td><span class="label label-success">New</span></td>
-                            <td>24/09/2015</td>
-                            <td>
-                                <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                                <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_1');"><span class="fa fa-times"></span></button>
-                            </td>
-                        </tr>
-                        <tr id="trow_2">
-                            <td class="text-center">2</td>
-                            <td><strong>Dmitry Ivaniuk</strong></td>
-                            <td><span class="label label-warning">Pending</span></td>
-                            <td>23/09/2015</td>
-                            <td>
-                                <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                                <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_2');"><span class="fa fa-times"></span></button>
-                            </td>
-                        </tr>
-                        <tr id="trow_3">
-                            <td class="text-center">3</td>
-                            <td><strong>Nadia Ali</strong></td>
-                            <td><span class="label label-info">In Queue</span></td>
-                            <td>22/09/2015</td>
-                            <td>
-                                <button class="btn btn-default btn-rounded btn-condensed btn-sm"><span class="fa fa-pencil"></span></button>
-                                <button class="btn btn-danger btn-rounded btn-condensed btn-sm" onClick="delete_row('trow_3');"><span class="fa fa-times"></span></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-bordered table-striped table-actions datatable">
+                    <thead>
+                    <tr>
+                        <th>CODE</th>
+                        <th>NAME</th>
+                        <th>START DATE</th>
+                        <th>REMARKS</th>
+                        <th>CREATE DATE</th>
+                        <th width="150">ACTION</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php 
+
+                        require_once('pages/database/main_db.php');
+
+                        $batch_query = "SELECT
+                            batch.id,
+                            batch.`name`,
+                            batch.created_date,
+                            batch.`code`,
+                            batch.start_date,
+                            batch.remarks
+                        FROM
+                            `batch`
+                        WHERE
+                            batch.`status` = '1'";
+
+                        $batch_execute = mysqli_query($con, $batch_query);
+
+                        while($batch_data = mysqli_fetch_array($batch_execute)){
+                     ?>
+                    <tr id="trow_3">
+                        <td><?php echo $batch_data['code']; ?></td>
+                        <td><?php echo $batch_data['name']; ?></td>
+                        <td><?php echo $batch_data['start_date']; ?></td>
+                        <td><?php echo $batch_data['remarks']; ?></td>
+                        <td><?php echo $batch_data['created_date']; ?></td>
+                        <td>
+                            <button value="<?php echo $batch_data['id'];?>" class="btn btn-default btn-rounded btn-condensed btn-sm edit"><span class="fa fa-pencil"></span></button>
+                            <button value="<?php echo $batch_data['id'];?>" class="btn btn-danger btn-rounded btn-condensed btn-sm delete"><span class="fa fa-times"></span></button>
+                        </td>
+                    </tr>
+                    <?php 
+                        }
+                    ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

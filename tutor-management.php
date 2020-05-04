@@ -13,7 +13,7 @@
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>        
         <!-- META SECTION -->
-        <title>SMS | Tutor Management</title>
+        <title>SMS | Tutor Registration</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,24 +56,6 @@
                 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- START MASKED INPUT PLUGIN -->
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <hr><h3 class="text-uppercase">Search tutor</h3><hr>
-                                        <div class="col-md-11">
-                                            <select name="search" id="search" style="width:100%;">
-                                                <option value="" selected disabled>Search Tutor</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <?php require_once('pages/tutor-management/tutor-details.php'); ?>
 
                     <?php require_once('pages/tutor-management/all-tutors.php'); ?>
@@ -102,7 +84,10 @@
                 dataType: 'json',
                 delay: 100,
                 data: function (term) {
-                    return term;
+                    return {
+                        term : term,
+                        rol : '2'
+                    }
                 },
                 processResults: function (data) {
                     return {
@@ -142,16 +127,33 @@
                 },
                 success : function(r){
                     if(r.message === 'success'){
-                        swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
-                        this.submit();
+                        swal({
+                            title: "Success",
+                            text: "Tutor Registered Successfully",
+                            icon: "success",
+                            buttons: [null,'OK'],
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                location.href = 'tutor-management.php';
+                            }
+                        });
                     } else if(r.message === 'empty'){
-                        swal ("Sorry", 'Fields Can not be empty', 'error');
+                        swal ("SORRY", 'FIELDS CAN NOT BE EMPTY', 'error');
                     } else if(r.message === 'exist'){
-                        swal ("Sorry", 'This Tutor is Exists', 'warning');
+                        swal ("SORRY", 'THIS IS EXISTING TUTOR', 'warning');
                     } else if(r.message === 'UPDATED'){
-                        swal ("UPDATED", 'TUTOR SUCCESSFULLY UPDATED', 'success');
+                        swal({
+                            title: "Updated",
+                            text: "Tutor Updated Successfully",
+                            icon: "success",
+                            buttons: [null,'OK'],
+                        }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                location.href = 'tutor-management.php';
+                            }
+                        });
                     } else if(r.message === 'NOT UPDATED'){
-                        swal ("SORRY", 'TUTOR NOT UPDATED', 'success');
+                        swal ("SORRY", 'TUTOR NOT UPDATED', 'error');
                     }
                 }
             });
@@ -214,6 +216,55 @@
                         $('#password').val(tdata.PASSWORD);
                     }
                 }
+            });
+
+        });
+        
+        $('.delete').on('click', function(){
+            let delete_id = $(this).val();
+
+            swal({
+                title: "Confirmation",
+                text: "Are you sure ?",
+                icon: "warning",
+                buttons: ['NO', 'YES'],
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                  $.ajax({
+                      url : 'pages/database/save-user.php',
+                      method : 'post',
+                      data : {
+                          delete_id : delete_id,
+                          m_operation : 'DELETE'
+                      },
+                      dataType : 'json',
+                      error : function(e){
+                          swal({
+                              title: "Success",
+                              text: "Tutor Removed Successfully",
+                              icon: "success",
+                              buttons: [null,'OK'],
+                          }).then(function(isConfirm) {
+                              if (isConfirm) {
+                                  location.href = 'tutor-management.php';
+                              }
+                          });
+                      },
+                      success : function(r){
+                          swal({
+                              title: "Success",
+                              text: "Tutor Removed Successfully",
+                              icon: "success",
+                              buttons: [null,'OK'],
+                          }).then(function(isConfirm) {
+                              if (isConfirm) {
+                                  location.href = 'tutor-management.php';
+                              }
+                          });
+                      }
+                  });
+              }
             });
 
         });

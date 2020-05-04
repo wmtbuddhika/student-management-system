@@ -34,6 +34,6 @@
 <script type="text/javascript" src="../js/demo_dashboard.js"></script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
-
+<script type="text/javascript" src="../js/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../js/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

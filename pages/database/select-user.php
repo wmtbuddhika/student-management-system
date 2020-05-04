@@ -1,7 +1,7 @@
 <?php 
 	
 	require_once('main_db.php');
-	$user_id = $_REQUEST['term'];
+	$user_id = $_REQUEST['term']['term'];
 
 	$result_array = array();
 
@@ -14,7 +14,7 @@
 		`user`
 	WHERE
 		`user`.`code` LIKE '%$user_id%'
-	OR `user`.`name` LIKE '%$user_id%'
+	OR `user`.`name` LIKE '%$user_id%' AND status = 1
 	ORDER BY
 		`user`.id ASC,
 		`user`.`name` ASC";

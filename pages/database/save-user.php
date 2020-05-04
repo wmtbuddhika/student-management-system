@@ -20,7 +20,12 @@
 	$email = $_REQUEST['email'];
 	$land_number = $_REQUEST['land_number'];
 	$office_number = $_REQUEST['office_number'];
-	$t_operation = $_REQUEST['t_operation'];
+    $t_operation = $_REQUEST['t_operation'];
+
+	if (isset($_REQUEST['m_operation'])) {
+        $m_operation = $_REQUEST['m_operation'];
+        $delete_id = $_REQUEST['delete_id'];
+    }
 	$user_id = $_REQUEST['user_id'];
 
 	$user_name = $_REQUEST['user_name'];
@@ -97,6 +102,21 @@
 			$message = "NOT UPDATED";
 
 		}
+	} else if($m_operation == 'DELETE'){
+		
+		$delete_status = "UPDATE `user`
+        SET `status` = '0'
+        WHERE
+        	(`id` = '$delete_id')";
+
+		$module_delete = mysqli_query($con, $delete_status);
+
+		if($module_delete){
+			$message = "DELETED";
+		} else {
+			$message = "NOT DELETED";
+		}
+
 	}
 
 	mysqli_close($con);
