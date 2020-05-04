@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6">
-                            <a href="#" class="btn btn-link btn-block">Forgot your password?</a>
+                            <a href="#" class="btn btn-link btn-block" onclick="forgotPassword()">Forgot your password?</a>
                         </div>
                         <div class="col-md-6">
                             <button id="login-btn" class="btn btn-info btn-block">Log In</button>
@@ -35,12 +35,9 @@
                 </div>
                 <div class="login-footer">
                     <div class="pull-left">
-                        &copy; 2020 PIBT Group Project
                     </div>
                     <div class="pull-right">
-                        <a href="#">About</a> |
-                        <a href="#">Privacy</a> |
-                        <a href="#">Contact Us</a>
+                        &copy; 2020 PIBT Group Project
                     </div>
                 </div>
             </div>
@@ -77,6 +74,19 @@
                     }
                 });
             });
+
+            function forgotPassword() {
+                swal({
+                    title: "Confirmation",
+                    text: "Are you want to retrieve your password ?",
+                    icon: "warning",
+                    buttons: ['NO', 'YES'],
+                }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        swal("Email Sent", 'Please check your registered email', 'success');
+                    }
+                });
+            }
 
         </script>
 
