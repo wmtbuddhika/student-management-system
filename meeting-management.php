@@ -152,6 +152,10 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                         else if (r.meetings[0].status == 3) {$text = 'Completed'}
                         $('button[data-id="status"] span:first').text($text);
                     }, 500);
+                    setTimeout(function(){
+                        $('#group').val(r.meetings[0].id);
+                        $('button[data-id="group"] span:first').text(r.meetings[0].code);
+                    }, 500);
                 }
             });
             $('html, body').animate({
