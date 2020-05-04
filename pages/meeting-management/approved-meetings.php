@@ -42,6 +42,8 @@
                                             echo 'Scheduled';
                                         } elseif ($meeting['status'] == 2) {
                                             echo 'Canceled';
+                                        }  elseif ($meeting['status'] == 3) {
+                                            echo 'Completed';
                                         } ?></td>
                                     <?php
                                     $userType = $_SESSION['user_type'];
