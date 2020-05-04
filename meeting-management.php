@@ -143,6 +143,15 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                     $('#dom').val(r.meetings[0].schedule_date);
                     $('#tom').val(r.meetings[0].schedule_time);
                     $('#meeting_message').val(r.meetings[0].comment);
+                    setTimeout(function(){
+                        $('#status').val(r.meetings[0].status);
+                        $text = '';
+                        if (r.meetings[0].status == 0) {$text = 'Pending'}
+                        else if (r.meetings[0].status == 1) {$text = 'Scheduled'}
+                        else if (r.meetings[0].status == 2) {$text = 'Canceled'}
+                        else if (r.meetings[0].status == 3) {$text = 'Completed'}
+                        $('button[data-id="status"] span:first').text($text);
+                    }, 500);
                 }
             });
             $('html, body').animate({
