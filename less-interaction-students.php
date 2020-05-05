@@ -64,7 +64,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     <table class="table table-bordered table-striped table-actions dataTable">
                                         <thead>
                                         <tr>
-                                            <th>Code</th>
+                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Date of Birth</th>
@@ -81,7 +81,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                         $allocationId = $_SESSION['allocation_id'];
 
                                         $query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
-                                            FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id AND r.permission_id = 3
+                                            FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id AND r.permission_id = 3 AND u.status = 1
                                             AND u.id IN (SELECT DISTINCT u.id count FROM user u, login l, role r WHERE u.id = l.user_id AND r.login_id = l.id 
                                             AND r.permission_id = 3 AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY)";
 

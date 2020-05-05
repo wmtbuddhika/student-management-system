@@ -223,7 +223,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                             <td><?php echo $student_data['code']; ?></td>
                                             <td><?php echo $student_data['student_name']; ?></td>
                                             <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
-                                            <td><strong><?php echo $student_data['batch_name']; ?></strong></td>
+                                            <td><strong><?php echo $student_data['module_name']; ?></strong></td>
                                             <td><?php echo $student_data['tutor_name']; ?></td>
                                             <td>
                                                 <button class="btn btn-default btn-rounded btn-condensed btn-sm" onClick="loadAllocation(<?php echo $student_data['id']; ?>)"><span class="fa fa-pencil"></span></button>

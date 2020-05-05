@@ -17,7 +17,6 @@
         </div>
     </li>
 
-    <li><a> </a></li>
     <li class="page-title">
         <a style="color: yellowgreen">Registrations</a>
     </li>
@@ -28,7 +27,6 @@
     <li><a href="../../module-management.php"><span class="fa fa-file-text"></span> Module Registration</a></li>
     <li><a href="../../group-management.php"><span class="fa fa-file-text"></span> Group Registration</a></li>
 
-    <li><a> </a></li>
     <li class="page-title">
         <a style="color: yellowgreen">Allocations</a>
     </li>
@@ -36,22 +34,15 @@
     <li><a href="../../student-allocation.php"><span class="fa fa-adjust"></span>Student Allocation</a></li>
 
 
-    <!--<li class="xn-openable active">
-    <li class="xn-openable">
-        <a href="#"><span class="fa fa-registered"></span>Registration Management</a>
-        <ul>
-            <li><a href="../../tutor-management.php"><span class="fa fa-inbox"></span>Tutor Management</a></li>
-            <li><a href="../../student-management.php"><span class="fa fa-file-text"></span> Student Management</a></li>
-            <li><a href="../../batch-management.php"><span class="fa fa-file-text"></span> Batch Management</a></li>
-            <li><a href="../../module-management.php"><span class="fa fa-file-text"></span> Module Management</a></li>
-            <li><a href="../../group-management.php"><span class="fa fa-file-text"></span> Group Management</a></li>
-        </ul>
+    <li class="xn-openable active">
+        <li class="xn-openable">
+            <a href="#" style="color: yellowgreen"></span>User Resources</a>
+            <ul>
+                <li><a href="../../chat-management.php"><span class="fa fa-television"></span>Messenger</a></li>
+                <li><a href="../../meeting-management.php"><span class="fa fa-calendar"></span>Meetings</a></li>
+                <li><a href="../../document-management.php"><span class="fa fa-file"></span>File Uploads</a></li>
+                <li><a href="../../blog-management.php"><span class="fa fa-terminal"></span>Blogger</a></li>
+            </ul>
+        </li>
     </li>
-    <li class="xn-openable">
-        <a href="#"><span class="fa fa-dribbble"></span>Student Management</a>
-        <ul>
-            <li><a href="../../student-allocation.php"><span class="fa fa-adjust"></span>Student Allocation</a></li>
-        </ul>
-    </li>
-    </li>-->
 </ul>

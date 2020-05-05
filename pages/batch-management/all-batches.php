@@ -8,11 +8,10 @@
                 <table class="table table-bordered table-striped table-actions datatable">
                     <thead>
                     <tr>
-                        <th>CODE</th>
+                        <th>ID</th>
                         <th>NAME</th>
                         <th>START DATE</th>
                         <th>REMARKS</th>
-                        <th>CREATE DATE</th>
                         <th width="150">ACTION</th>
                     </tr>
                     </thead>
@@ -42,7 +41,6 @@
                         <td><?php echo $batch_data['name']; ?></td>
                         <td><?php echo $batch_data['start_date']; ?></td>
                         <td><?php echo $batch_data['remarks']; ?></td>
-                        <td><?php echo $batch_data['created_date']; ?></td>
                         <td>
                             <button value="<?php echo $batch_data['id'];?>" class="btn btn-default btn-rounded btn-condensed btn-sm edit"><span class="fa fa-pencil"></span></button>
                             <button value="<?php echo $batch_data['id'];?>" class="btn btn-danger btn-rounded btn-condensed btn-sm delete"><span class="fa fa-times"></span></button>

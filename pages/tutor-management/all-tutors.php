@@ -9,7 +9,7 @@
                 <table class="table table-bordered table-striped table-actions datatable">
                     <thead>
                     <tr>
-                        <th>CODE</th>
+                        <th>ID</th>
                         <th>NAME</th>
                         <th>DOB</th>
                         <th>NIC</th>

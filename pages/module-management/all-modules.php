@@ -8,9 +8,8 @@
                 <table class="table table-bordered table-striped table-actions datatable">
                     <thead>
                     <tr>
-                        <th>Batch Code</th>
-                        <th>Batch Name</th>
-                        <th>Starting Date</th>
+                        <th>Module ID</th>
+                        <th>Module Name</th>
                         <th>Remarks</th>
                         <th>Actions</th>
                     </tr>
@@ -37,7 +36,6 @@
                     <tr id="trow_1">
                         <td><strong><?php echo $result['code']; ?></strong></td>
                         <td><strong><?php echo $result['name']; ?></strong></td>
-                        <td><strong><?php echo $result['start_date']; ?></strong></td>
                         <td><strong><?php echo $result['remarks']; ?></strong></td>
                         <td>
                             <button value="<?php echo $result['id']; ?>" class="btn btn-default btn-rounded btn-condensed btn-sm edit"><span class="fa fa-pencil"></span></button>

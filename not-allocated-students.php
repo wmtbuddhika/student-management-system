@@ -60,7 +60,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                                     <table class="table table-bordered table-striped table-actions dataTable">
                                         <thead>
                                         <tr>
-                                            <th>Code</th>
+                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Date of Birth</th>
@@ -76,7 +76,7 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
 
                                         $tutor_main_select_query = "SELECT u.code,u.name,u.gender,u.date_of_birth,u.nic_no,u.mobile_no,u.email,u.address 
                                             FROM user u LEFT JOIN allocation a ON u.id = a.student_id, login l, role r WHERE u.id = l.user_id 
-                                            AND r.login_id = l.id AND r.permission_id = 3 AND a.id IS NULL ORDER BY u.code";
+                                            AND r.login_id = l.id AND r.permission_id = 3 AND u.status = 1 AND a.id IS NULL ORDER BY u.code";
 
                                         $query_execute = mysqli_query($con, $tutor_main_select_query);
 

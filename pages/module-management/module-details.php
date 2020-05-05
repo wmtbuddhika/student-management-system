@@ -9,7 +9,7 @@
                     <input type="hidden" name="module_id" id="module_id" value="0">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Module Code *</label>
+                            <label class="col-md-3 control-label">Module ID *</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control" value="" name="module_code" id="module_code" required/>
                             </div>

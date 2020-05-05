@@ -60,7 +60,7 @@
                     $allocationId = $_SESSION['allocation_id'];
 
                     $query = "SELECT COUNT(DISTINCT u.id) count FROM user u, login l, role r, allocation a WHERE u.id = l.user_id AND r.login_id = l.id 
-                                AND r.permission_id = 3 AND a.student_id = u.id AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY) GROUP BY m.user_id)";
+                                AND r.permission_id = 3 AND a.student_id = u.id AND u.status = 1 AND u.id NOT IN (SELECT m.user_id FROM message m WHERE m.created_date > DATE_SUB(NOW(), INTERVAL 10 DAY) GROUP BY m.user_id)";
 
                     if ($userType != 1 && $allocationId != null) {
                         $query = $query . "AND a.allocation_group_id IN ($allocationId)";

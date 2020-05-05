@@ -13,10 +13,12 @@
                                 $userId = $_SESSION['user_id'];
                                 $allocationId = $_SESSION['allocation_id'];
                                 $userType = $_SESSION['user_type'];
-                                $query = "SELECT ag.id, ag.code FROM allocation_group ag, allocation a WHERE a.allocation_group_id = ag.id AND ag.status = 1 AND a.status = 1 AND ag.id IN ($allocationId)
-                                          AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId)";
+                                $batch_query = "SELECT DISTINCT ag.id, ag.code FROM allocation_group ag, allocation a WHERE a.allocation_group_id = ag.id AND ag.status = 1 ";
 
-                                $result = mysqli_query($con, $query);
+                                if ($allocationId != null && $userType != 1) {
+                                    $batch_query = $batch_query . "AND a.status = 1 AND ag.id IN ($allocationId) AND IF($userType = 3, a.student_id = $userId, ag.tutor_id = $userId)";
+                                }
+                                $result = mysqli_query($con, $batch_query);
 
                                 while($data = mysqli_fetch_array($result)){
                                     ?>
