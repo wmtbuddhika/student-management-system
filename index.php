@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">
-    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Mirrored from aqvatarius.com/themes/atlant/html/pages-login-website-light.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 Oct 2016 09:28:06 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>        
@@ -15,7 +17,7 @@
                     <form class="form-horizontal" id="main-form" method="post">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input name="user-email" id="user-email" type="text" class="form-control" placeholder="Email or User Name"/>
+                            <input name="user-email" id="user-email" type="text" class="form-control" placeholder="User Name"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -77,13 +79,43 @@
 
             function forgotPassword() {
                 swal({
-                    title: "Confirmation",
-                    text: "Are you want to retrieve your password ?",
                     icon: "warning",
-                    buttons: ['NO', 'YES'],
-                }).then(function(isConfirm) {
-                    if (isConfirm) {
-                        swal("Email Sent", 'Please check your registered email', 'success');
+                    title: "Confirmation",
+                    text: 'Are you want to retrieve your password ? \n\n Please enter registered email',
+                    inputPlaceholder: "Please enter registered email",
+                    content: "input",
+                    buttons: true,
+                }).then((value) => {
+                    if (value != null) {
+                        $.ajax({
+                            url: 'pages/database/forgot-password.php',
+                            data: {'email': value},
+                            method: 'post',
+                            dataType: 'json',
+
+                            error: function (e) {
+                                console.log(e);
+                            },
+                            success: function (r) {
+                                if (r.result === "empty") {
+                                    swal("Check Again", 'No registered email as entered', 'warning');
+                                } else if (r.result === "success") {
+                                    $.ajax({
+                                        url: 'pages/database/send-mail-forgot-password.php',
+                                        data: {'email': value},
+                                        method: 'post',
+                                        dataType: 'json',
+
+                                        error: function (e) {
+                                            console.log(e);
+                                        },
+                                        success: function (r) {
+                                        }
+                                    });
+                                    swal("Request Sent", 'Please check your registered email', 'success');
+                                }
+                            }
+                        });
                     }
                 });
             }

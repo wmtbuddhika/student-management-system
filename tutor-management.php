@@ -115,6 +115,9 @@
                }
 
             let form_data = $('#main-form').serializeArray();
+            let email = $('#email').val();
+            let username = $('#user_name').val();
+            let password = $('#password').val();
             form_data.push({name:'t_operation', value:toperation});
 
             $.ajax({
@@ -126,6 +129,18 @@
                     swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
                 },
                 success : function(r){
+                    $.ajax({
+                        url: 'http://127.0.0.1:8081/pages/database/send-mail-credentials.php',
+                        data: { 'email': email, 'userType': 2, 'userName': username, 'password': password },
+                        method: 'post',
+                        dataType: 'json',
+
+                        error: function (e) {
+                            console.log(e);
+                        },
+                        success: function (r) {
+                        }
+                    });
                     if(r.message === 'success'){
                         swal({
                             title: "Success",

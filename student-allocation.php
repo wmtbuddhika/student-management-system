@@ -303,6 +303,18 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
             },
             success : function(r){
+                $.ajax({
+                    url: 'http://127.0.0.1:8081/pages/database/send-mail-student-allocation.php',
+                    data: {'allocation_id': allocationId, 'students': students},
+                    method: 'post',
+                    dataType: 'json',
+
+                    error: function (e) {
+                        console.log(e);
+                    },
+                    success: function (r) {
+                    }
+                });
                 if(r.message === 'success'){
                     swal("Success", 'Students Allocated Successfully', 'success').then(function(isConfirm) {
                         if (isConfirm) {

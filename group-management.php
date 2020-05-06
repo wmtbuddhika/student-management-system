@@ -270,6 +270,18 @@ if(empty($_SESSION['user_name']) || $_SESSION['user_name'] == NULL){
                 swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
             },
             success : function(r){
+                $.ajax({
+                    url: 'http://127.0.0.1:8081/pages/database/send-mail-group-allocation.php',
+                    data: form_data,
+                    method: 'post',
+                    dataType: 'json',
+
+                    error: function (e) {
+                        console.log(e);
+                    },
+                    success: function (r) {
+                    }
+                });
                 if(r.message === 'success'){
                     swal("Success", 'Group Saved Successfully', 'success').then(function(isConfirm) {
                         if (isConfirm) {
