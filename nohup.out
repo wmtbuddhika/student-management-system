@@ -1,0 +1,26 @@
+[Tue May  5 16:12:42 2020] 127.0.0.1:58602 [200]: /
+PHP 7.1.23 Development Server started at Tue May  5 16:11:55 2020
+Listening on http://localhost:9000
+Document root is /Users/thushara/Documents/PIBT/Projects/SMS
+Press Ctrl-C to quit.
+[Tue May  5 16:23:56 2020] 127.0.0.1:61535 [200]: /
+[Tue May  5 16:23:57 2020] 127.0.0.1:61536 [200]: /css/theme-default.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61543 [200]: /js/plugins/jquery/jquery.min.js
+[Tue May  5 16:23:57 2020] 127.0.0.1:61546 [200]: /css/jquery/jquery-ui.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61547 [200]: /css/bootstrap/bootstrap.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61548 [200]: /css/fontawesome/font-awesome.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61549 [200]: /css/summernote/summernote.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61550 [200]: /css/codemirror/codemirror.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61551 [200]: /css/nvd3/nv.d3.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61552 [200]: /css/mcustomscrollbar/jquery.mCustomScrollbar.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61553 [200]: /css/fullcalendar/fullcalendar.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61554 [200]: /css/blueimp/blueimp-gallery.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61555 [200]: /css/rickshaw/rickshaw.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61556 [200]: /css/dropzone/dropzone.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61557 [200]: /css/introjs/introjs.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61558 [200]: /css/animate/animate.min.css
+[Tue May  5 16:23:57 2020] 127.0.0.1:61559 [200]: /img/bg.png
+[Tue May  5 16:23:57 2020] 127.0.0.1:61560 [200]: /img/backgrounds/wall_1.jpg
+[Tue May  5 16:23:57 2020] 127.0.0.1:61561 [200]: /img/favicon.png
+[Tue May  5 16:23:57 2020] 127.0.0.1:61562 [200]: /img/favicon.png
+[Tue May  5 16:27:41 2020] 127.0.0.1:62430 [200]: /pages/database/send-mail-student-allocation.php
