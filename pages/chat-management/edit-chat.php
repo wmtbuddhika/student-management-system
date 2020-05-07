@@ -52,14 +52,7 @@
                 swal ("Something Wrong", 'Please Contact Your System Administrator', 'warning');
             },
             success : function(r){
-                if(r.message === 'success'){
-                    $("#edit-chat").css("visibility", "hidden");
-                    swal ("Success", 'Congratulations. New Tutor has Registered', 'success');
-                } else if(r.message === 'empty'){
-                    swal ("Sorry", 'Fields Can not be empty', 'error');
-                } else if(r.message === 'exist'){
-                    swal ("Sorry", 'This Student Already In', 'warning');
-                }
+                $("#edit-chat").css("visibility", "hidden");
             }
         });
         $('html, body').animate({
