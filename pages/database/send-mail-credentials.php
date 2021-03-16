@@ -23,7 +23,7 @@ if((!empty($email) && $email != NULL)){
     $body = $body . 'Hi,<br>';
     $body = $body . 'Here is your login credentials for PIBT Student Management System.<br>';
     $body = $body . 'Make sure to change your login credentials.<br>';
-    $body = $body . 'Go to: https://pibt.guruwaru.com/<br><br>';
+    $body = $body . 'Go to: https://guruwaru.com/<br><br>';
     $body = $body . '<table><tbody>';
 
     $body = $body . "<tr style='width: 150px;'><td>User Type</td><td style='width: 10px;'>:</td><td>$userType</td></tr>";

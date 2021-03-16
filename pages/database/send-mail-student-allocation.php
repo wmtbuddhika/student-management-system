@@ -24,7 +24,7 @@ if((!empty($students) && $students != NULL)){
         if ($count > 0) {
             $body = $body . 'Hi,<br>';
             $body = $body . 'You have allocated for following Group<br>';
-            $body = $body . 'Go to: https://pibt.guruwaru.com/<br><br>';
+            $body = $body . 'Go to: https://guruwaru.com/<br><br>';
             $body = $body . '<table><tbody>';
 
             while ($user = mysqli_fetch_assoc($execute)) {

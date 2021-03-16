@@ -19,7 +19,7 @@ if((!empty($email) && $email != NULL)){
         $body = $body . 'Hi,<br>';
         $body = $body . 'We have received a forgot password request and here are the login credentials.<br>';
         $body = $body . 'Make sure to change your login credentials.<br>';
-        $body = $body . 'Go to: https://pibt.guruwaru.com/<br><br>';
+        $body = $body . 'Go to: https://guruwaru.com/<br><br>';
         $body = $body . '<table><tbody>';
 
         while($user = mysqli_fetch_assoc($execute)) {
